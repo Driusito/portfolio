@@ -70,7 +70,118 @@
     .btn-ghost { display: inline-flex; align-items: center; gap: .5rem; background: transparent; color: var(--text); font-family: var(--mono); font-size: 12px; letter-spacing: .08em; padding: .75rem 1.5rem; border: 1px solid var(--border2); border-radius: 2px; cursor: pointer; text-decoration: none; transition: all .2s; }
     .btn-ghost:hover { border-color: var(--accent); color: var(--accent); }
 
-   
+   /* TERMINAL — versión reimaginada */
+.hero-terminal {
+    position: absolute;
+    right: 3rem;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 380px;
+    backdrop-filter: blur(14px) saturate(180%);
+    background: rgba(20, 20, 28, 0.55);
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 0 40px rgba(0, 0, 0, 0.35);
+    animation: fadeUp .6s .4s ease both;
+    display: none;
+}
+
+@media (min-width: 1100px) {
+    .hero-terminal { display: block; }
+}
+
+/* Barra superior */
+.terminal-bar {
+    display: flex;
+    align-items: center;
+    gap: .5rem;
+    padding: .7rem 1rem;
+    background: rgba(255, 255, 255, 0.06);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+    backdrop-filter: blur(10px);
+}
+
+/* Botones estilo macOS pero más suaves */
+.dot {
+    width: 11px;
+    height: 11px;
+    border-radius: 50%;
+    opacity: .85;
+    transition: .2s ease;
+}
+.dot:hover { opacity: 1; transform: scale(1.1); }
+
+.dot.r { background: #ff5f56; }
+.dot.y { background: #ffbd2e; }
+.dot.g { background: #27c93f; }
+
+.terminal-title {
+    font-size: 12px;
+    color: rgba(255, 255, 255, 0.45);
+    margin-left: .5rem;
+    letter-spacing: .3px;
+}
+
+/* Cuerpo */
+.terminal-body {
+    padding: 1.2rem 1.4rem;
+    font-size: 13px;
+    line-height: 1.9;
+    font-family: "JetBrains Mono", monospace;
+    color: #e5e7eb;
+}
+
+/* Líneas */
+.t-line {
+    display: flex;
+    gap: .6rem;
+}
+
+/* Prompt con glow */
+.t-prompt {
+    color: #7dd3fc;
+    text-shadow: 0 0 6px rgba(125, 211, 252, 0.6);
+    flex-shrink: 0;
+}
+
+/* Comando */
+.t-cmd {
+    color: #f1f5f9;
+}
+
+/* Output */
+.t-out {
+    color: rgba(255, 255, 255, 0.45);
+    padding-left: 1.2rem;
+}
+
+/* Colores especiales */
+.t-key { color: #a5b4fc; }
+.t-val { color: #f9a8d4; }
+.t-str { color: #86efac; }
+
+/* Cursor neon */
+.cursor {
+    display: inline-block;
+    width: 8px;
+    height: 15px;
+    background: #7dd3fc;
+    margin-left: 3px;
+    animation: blink .8s step-end infinite;
+    box-shadow: 0 0 8px #7dd3fc;
+}
+
+@keyframes blink {
+    50% { opacity: 0; }
+}
+
+/* Animación */
+@keyframes fadeUp {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(-50%); }
+}
+
 
     /* SECTIONS */
     section { padding: 6rem 2.5rem; }
@@ -233,25 +344,65 @@
     </div>
   </div>
   <div class="hero-terminal">
-    <div class="terminal-bar">
-      <div class="dot r"></div><div class="dot y"></div><div class="dot g"></div>
-      <span class="terminal-title">andres@dev ~ profile.json</span>
+  <div class="terminal-bar">
+    <div class="dot r"></div>
+    <div class="dot y"></div>
+    <div class="dot g"></div>
+    <span class="terminal-title">andres@dev ~ profile.json</span>
+  </div>
+
+  <div class="terminal-body">
+    <div class="t-line">
+      <span class="t-prompt">$</span>
+      <span class="t-cmd">cat profile.json</span>
     </div>
-    <div class="terminal-body">
-      <div class="t-line"><span class="t-prompt">$</span><span class="t-cmd">cat profile.json</span></div>
-      <div class="t-out">{</div>
-      <div class="t-out">&nbsp;&nbsp;<span class="t-key">"nombre"</span>: <span class="t-str">"Andrés Jurado"</span>,</div>
-      <div class="t-out">&nbsp;&nbsp;<span class="t-key">"rol"</span>: <span class="t-str">"Java Dev · Data Eng"</span>,</div>
-      <div class="t-out">&nbsp;&nbsp;<span class="t-key">"ubicacion"</span>: <span class="t-str">"Sevilla, España"</span>,</div>
-      <div class="t-out">&nbsp;&nbsp;<span class="t-key">"stack"</span>: [</div>
-      <div class="t-out">&nbsp;&nbsp;&nbsp;&nbsp;<span class="t-str">"Java"</span>, <span class="t-str">"Spring Boot"</span>,</div>
-      <div class="t-out">&nbsp;&nbsp;&nbsp;&nbsp;<span class="t-str">"Snowflake"</span>, <span class="t-str">"GCP"</span>,</div>
-      <div class="t-out">&nbsp;&nbsp;&nbsp;&nbsp;<span class="t-str">"Kotlin"</span>, <span class="t-str">"Python"</span></div>
-      <div class="t-out">&nbsp;&nbsp;],</div>
-      <div class="t-out">&nbsp;&nbsp;<span class="t-key">"disponible"</span>: <span class="t-val">true</span></div>
-      <div class="t-out">}</div>
-      <div class="t-line" style="margin-top:.5rem"><span class="t-prompt">$</span><span class="cursor"></span></div>
+
+    <div class="t-out">{</div>
+
+    <div class="t-out">
+      &nbsp;&nbsp;<span class="t-key">"nombre"</span>: <span class="t-str">"Andrés Jurado"</span>,
     </div>
+
+    <div class="t-out">
+      &nbsp;&nbsp;<span class="t-key">"rol"</span>: <span class="t-str">"Java Dev · Data Eng"</span>,
+    </div>
+
+    <div class="t-out">
+      &nbsp;&nbsp;<span class="t-key">"ubicacion"</span>: <span class="t-str">"Sevilla, España"</span>,
+    </div>
+
+    <div class="t-out">
+      &nbsp;&nbsp;<span class="t-key">"stack"</span>: [
+    </div>
+
+    <div class="t-out">
+      &nbsp;&nbsp;&nbsp;&nbsp;<span class="t-str">"Java"</span>, <span class="t-str">"Spring Boot"</span>,
+    </div>
+
+    <div class="t-out">
+      &nbsp;&nbsp;&nbsp;&nbsp;<span class="t-str">"Snowflake"</span>, <span class="t-str">"GCP"</span>,
+    </div>
+
+    <div class="t-out">
+      &nbsp;&nbsp;&nbsp;&nbsp;<span class="t-str">"Kotlin"</span>, <span class="t-str">"Python"</span>
+    </div>
+
+    <div class="t-out">
+      &nbsp;&nbsp;],
+    </div>
+
+    <div class="t-out">
+      &nbsp;&nbsp;<span class="t-key">"disponible"</span>: <span class="t-val">true</span>
+    </div>
+
+    <div class="t-out">}</div>
+
+    <div class="t-line" style="margin-top:.5rem">
+      <span class="t-prompt">$</span><span class="cursor"></span>
+    </div>
+  </div>
+</div>
+
   </div>
 </section>
 
