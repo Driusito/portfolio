@@ -70,21 +70,7 @@
     .btn-ghost { display: inline-flex; align-items: center; gap: .5rem; background: transparent; color: var(--text); font-family: var(--mono); font-size: 12px; letter-spacing: .08em; padding: .75rem 1.5rem; border: 1px solid var(--border2); border-radius: 2px; cursor: pointer; text-decoration: none; transition: all .2s; }
     .btn-ghost:hover { border-color: var(--accent); color: var(--accent); }
 
-    /* TERMINAL */
-    .hero-terminal { position: absolute; right: 2.5rem; top: 50%; transform: translateY(-50%); width: 360px; background: var(--bg2); border: 1px solid var(--border); border-radius: 6px; overflow: hidden; animation: fadeUp .6s .5s ease both; display: none; }
-    @media (min-width: 1100px) { .hero-terminal { display: block; } }
-    .terminal-bar { display: flex; align-items: center; gap: .5rem; padding: .6rem 1rem; background: var(--bg3); border-bottom: 1px solid var(--border); }
-    .dot { width: 10px; height: 10px; border-radius: 50%; }
-    .dot.r { background: #f43f5e; } .dot.y { background: #f59e0b; } .dot.g { background: #22c55e; }
-    .terminal-title { font-size: 11px; color: var(--muted); margin-left: .5rem; }
-    .terminal-body { padding: 1rem 1.2rem; font-size: 12px; line-height: 2; }
-    .t-line { display: flex; gap: .5rem; }
-    .t-prompt { color: var(--accent); flex-shrink: 0; }
-    .t-cmd { color: var(--text); }
-    .t-out { color: var(--muted); padding-left: 1rem; }
-    .t-key { color: var(--accent2); } .t-val { color: var(--accent3); } .t-str { color: #86efac; }
-    .cursor { display: inline-block; width: 8px; height: 14px; background: var(--accent); margin-left: 2px; animation: blink .8s step-end infinite; vertical-align: middle; }
-    @keyframes blink { 50% { opacity: 0; } }
+   
 
     /* SECTIONS */
     section { padding: 6rem 2.5rem; }
