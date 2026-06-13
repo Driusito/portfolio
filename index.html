@@ -1,934 +1,1221 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Andrés Jurado — Software Developer</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;400;500;700&family=Syne:wght@400;600;700;800&display=swap" rel="stylesheet" />
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Andrés Jurado — Developer</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;400;500;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/devicon.min.css">
   <style>
-    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-
     :root {
-      --bg:      #090b0e;
-      --bg2:     #0e1117;
-      --bg3:     #141820;
-      --border:  #1e2530;
-      --border2: #2a3340;
-      --text:    #e2e8f0;
-      --muted:   #64748b;
-      --accent:  #00d4aa;
-      --accent2: #0ea5e9;
-      --accent3: #f59e0b;
-      --mono:    'JetBrains Mono', monospace;
-      --sans:    'Syne', sans-serif;
+      --bg:          #0d1117;
+      --surface:     #161b22;
+      --surface2:    #1c2333;
+      --border:      #30363d;
+      --accent:      #00e676;
+      --accent-dim:  #00e67622;
+      --accent2:     #58a6ff;
+      --text:        #e6edf3;
+      --text-muted:  #8b949e;
+      --text-faint:  #484f58;
+      --mono:        'JetBrains Mono', monospace;
+      --sans:        'Inter', sans-serif;
+      --sidebar-w:   270px;
+      --radius:      8px;
+      --transition:  200ms ease;
     }
-
+ 
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
     html { scroll-behavior: smooth; }
-    body { background: var(--bg); color: var(--text); font-family: var(--mono); font-size: 14px; line-height: 1.7; overflow-x: hidden; }
-
-    body::before {
-      content: '';
-      position: fixed; inset: 0;
-      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.03'/%3E%3C/svg%3E");
-      pointer-events: none; z-index: 1000; opacity: .4;
+ 
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: var(--sans);
+      font-size: 14px;
+      line-height: 1.7;
+      display: flex;
+      min-height: 100vh;
     }
-
-    ::-webkit-scrollbar { width: 4px; }
+ 
+    a { color: var(--accent); text-decoration: none; transition: opacity var(--transition); }
+    a:hover { opacity: .75; }
+    ::selection { background: var(--accent); color: var(--bg); }
+ 
+    ::-webkit-scrollbar { width: 6px; }
     ::-webkit-scrollbar-track { background: var(--bg); }
-    ::-webkit-scrollbar-thumb { background: var(--accent); border-radius: 2px; }
-
-    /* NAV */
-    nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; display: flex; align-items: center; justify-content: space-between; padding: 1rem 2.5rem; border-bottom: 1px solid transparent; transition: all .3s; }
-    nav.scrolled { background: rgba(9,11,14,.9); border-bottom-color: var(--border); backdrop-filter: blur(12px); }
-    .nav-logo { font-family: var(--mono); font-weight: 700; font-size: 13px; color: var(--accent); letter-spacing: .05em; }
-    .nav-logo span { color: var(--muted); }
-    .nav-links { display: flex; gap: 2rem; list-style: none; }
-    .nav-links a { color: var(--muted); text-decoration: none; font-size: 12px; letter-spacing: .08em; transition: color .2s; }
-    .nav-links a:hover { color: var(--accent); }
-
-    /* HERO */
-    #hero { min-height: 100vh; display: flex; align-items: center; padding: 6rem 2.5rem 4rem; position: relative; overflow: hidden; }
-    .hero-grid { position: absolute; inset: 0; background-image: linear-gradient(var(--border) 1px, transparent 1px), linear-gradient(90deg, var(--border) 1px, transparent 1px); background-size: 60px 60px; opacity: .3; mask-image: radial-gradient(ellipse 80% 80% at 50% 50%, black 30%, transparent 100%); }
-    .hero-glow { position: absolute; width: 600px; height: 600px; border-radius: 50%; background: radial-gradient(circle, rgba(0,212,170,.12) 0%, transparent 70%); top: -100px; right: -100px; animation: pulse 6s ease-in-out infinite; }
-    .hero-glow2 { position: absolute; width: 400px; height: 400px; border-radius: 50%; background: radial-gradient(circle, rgba(14,165,233,.08) 0%, transparent 70%); bottom: 0; left: 10%; animation: pulse 8s ease-in-out infinite reverse; }
-    @keyframes pulse { 0%,100% { transform: scale(1); opacity: 1; } 50% { transform: scale(1.1); opacity: .7; } }
-    .hero-content { position: relative; z-index: 1; max-width: 900px; }
-    .hero-tag { display: inline-flex; align-items: center; gap: .5rem; font-size: 11px; letter-spacing: .12em; color: var(--accent); border: 1px solid rgba(0,212,170,.3); padding: .3rem .8rem; border-radius: 2px; margin-bottom: 2rem; animation: fadeUp .6s ease both; }
-    .hero-tag::before { content: '▶'; font-size: 8px; }
-    .hero-name { font-family: var(--sans); font-size: clamp(3rem, 8vw, 6.5rem); font-weight: 800; line-height: .95; letter-spacing: -.03em; margin-bottom: 1.5rem; animation: fadeUp .6s .1s ease both; }
-    .hero-name .line1 { display: block; color: var(--text); }
-    .hero-name .line2 { display: block; background: linear-gradient(135deg, var(--accent) 0%, var(--accent2) 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
-    .hero-roles { display: flex; flex-wrap: wrap; gap: .75rem; margin-bottom: 2rem; animation: fadeUp .6s .2s ease both; }
-    .role-pill { font-size: 11px; letter-spacing: .06em; padding: .35rem .9rem; border: 1px solid var(--border2); border-radius: 2px; color: var(--muted); background: var(--bg2); }
-    .role-pill.active { border-color: rgba(0,212,170,.4); color: var(--accent); background: rgba(0,212,170,.05); }
-    .hero-desc { font-size: 14px; color: var(--muted); max-width: 560px; line-height: 1.8; margin-bottom: 2.5rem; animation: fadeUp .6s .3s ease both; }
-    .hero-desc strong { color: var(--text); font-weight: 500; }
-    .hero-ctas { display: flex; gap: 1rem; flex-wrap: wrap; animation: fadeUp .6s .4s ease both; }
-    .btn-primary { display: inline-flex; align-items: center; gap: .5rem; background: var(--accent); color: var(--bg); font-family: var(--mono); font-size: 12px; font-weight: 700; letter-spacing: .08em; padding: .75rem 1.5rem; border: none; border-radius: 2px; cursor: pointer; text-decoration: none; transition: all .2s; }
-    .btn-primary:hover { background: #00f5c4; transform: translateY(-1px); box-shadow: 0 8px 24px rgba(0,212,170,.3); }
-    .btn-ghost { display: inline-flex; align-items: center; gap: .5rem; background: transparent; color: var(--text); font-family: var(--mono); font-size: 12px; letter-spacing: .08em; padding: .75rem 1.5rem; border: 1px solid var(--border2); border-radius: 2px; cursor: pointer; text-decoration: none; transition: all .2s; }
-    .btn-ghost:hover { border-color: var(--accent); color: var(--accent); }
-
-   /* TERMINAL — versión reimaginada */
-.hero-terminal {
-    position: absolute;
-    right: 3rem;
-    top: 50%;
-    transform: translateY(-50%);
-    width: 380px;
-    backdrop-filter: blur(14px) saturate(180%);
-    background: rgba(20, 20, 28, 0.55);
-    border: 1px solid rgba(255, 255, 255, 0.12);
-    border-radius: 12px;
-    overflow: hidden;
-    box-shadow: 0 0 40px rgba(0, 0, 0, 0.35);
-    animation: fadeUp .6s .4s ease both;
-    display: none;
-}
-
-@media (min-width: 1100px) {
-    .hero-terminal { display: block; }
-}
-
-/* Barra superior */
-.terminal-bar {
-    display: flex;
-    align-items: center;
-    gap: .5rem;
-    padding: .7rem 1rem;
-    background: rgba(255, 255, 255, 0.06);
-    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
-    backdrop-filter: blur(10px);
-}
-
-/* Botones estilo macOS pero más suaves */
-.dot {
-    width: 11px;
-    height: 11px;
-    border-radius: 50%;
-    opacity: .85;
-    transition: .2s ease;
-}
-.dot:hover { opacity: 1; transform: scale(1.1); }
-
-.dot.r { background: #ff5f56; }
-.dot.y { background: #ffbd2e; }
-.dot.g { background: #27c93f; }
-
-.terminal-title {
-    font-size: 12px;
-    color: rgba(255, 255, 255, 0.45);
-    margin-left: .5rem;
-    letter-spacing: .3px;
-}
-
-/* Cuerpo */
-.terminal-body {
-    padding: 1.2rem 1.4rem;
-    font-size: 13px;
-    line-height: 1.9;
-    font-family: "JetBrains Mono", monospace;
-    color: #e5e7eb;
-}
-
-/* Líneas */
-.t-line {
-    display: flex;
-    gap: .6rem;
-}
-
-/* Prompt con glow */
-.t-prompt {
-    color: #7dd3fc;
-    text-shadow: 0 0 6px rgba(125, 211, 252, 0.6);
-    flex-shrink: 0;
-}
-
-/* Comando */
-.t-cmd {
-    color: #f1f5f9;
-}
-
-/* Output */
-.t-out {
-    color: rgba(255, 255, 255, 0.45);
-    padding-left: 1.2rem;
-}
-
-/* Colores especiales */
-.t-key { color: #a5b4fc; }
-.t-val { color: #f9a8d4; }
-.t-str { color: #86efac; }
-
-/* Cursor neon */
-.cursor {
-    display: inline-block;
-    width: 8px;
-    height: 15px;
-    background: #7dd3fc;
-    margin-left: 3px;
-    animation: blink .8s step-end infinite;
-    box-shadow: 0 0 8px #7dd3fc;
-}
-
-@keyframes blink {
-    50% { opacity: 0; }
-}
-
-/* Animación */
-@keyframes fadeUp {
-    from { opacity: 0; transform: translateY(20px); }
-    to { opacity: 1; transform: translateY(-50%); }
-}
-
-
-    /* SECTIONS */
-    section { padding: 6rem 2.5rem; }
-    .section-label { display: inline-flex; align-items: center; gap: .6rem; font-size: 11px; letter-spacing: .12em; color: var(--accent); margin-bottom: 1rem; }
-    .section-label::before { content: '//'; color: var(--muted); }
-    .section-title { font-family: var(--sans); font-size: clamp(2rem, 4vw, 3rem); font-weight: 800; letter-spacing: -.02em; margin-bottom: 3rem; color: var(--text); }
-    .section-title span { background: linear-gradient(135deg, var(--accent), var(--accent2)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
-
-    @keyframes fadeUp { from { opacity: 0; transform: translateY(24px); } to { opacity: 1; transform: translateY(0); } }
-    .reveal { opacity: 0; transform: translateY(32px); transition: opacity .6s ease, transform .6s ease; }
-    .reveal.visible { opacity: 1; transform: none; }
-
-    /* STACK */
-    #stack { background: var(--bg2); border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); }
-    .stack-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 1px; background: var(--border); border: 1px solid var(--border); }
-    .stack-card { background: var(--bg2); padding: 1.5rem; transition: background .2s; }
-    .stack-card:hover { background: var(--bg3); }
-    .stack-cat { font-size: 10px; letter-spacing: .12em; color: var(--accent); margin-bottom: .75rem; text-transform: uppercase; }
-    .stack-tags { display: flex; flex-wrap: wrap; gap: .4rem; }
-    .tag { font-size: 11px; padding: .2rem .6rem; border: 1px solid var(--border2); border-radius: 2px; color: var(--muted); background: var(--bg); transition: all .15s; }
-    .tag:hover { border-color: var(--accent); color: var(--accent); }
-    .tag.hot { border-color: rgba(0,212,170,.35); color: var(--accent); background: rgba(0,212,170,.06); }
-
-    /* PROYECTOS */
-    .projects-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(340px, 1fr)); gap: 1.5rem; }
-    .project-card { background: var(--bg2); border: 1px solid var(--border); border-radius: 4px; overflow: hidden; transition: all .25s; display: flex; flex-direction: column; }
-    .project-card:hover { border-color: var(--accent); transform: translateY(-3px); box-shadow: 0 12px 40px rgba(0,212,170,.1); }
-    .project-header { padding: 1.25rem 1.5rem .75rem; border-bottom: 1px solid var(--border); display: flex; align-items: center; gap: .75rem; }
-    .project-icon { width: 36px; height: 36px; background: var(--bg3); border: 1px solid var(--border2); border-radius: 4px; display: flex; align-items: center; justify-content: center; font-size: 16px; flex-shrink: 0; }
-    .project-name { font-family: var(--sans); font-weight: 700; font-size: 15px; color: var(--text); }
-    .project-type { font-size: 10px; color: var(--muted); letter-spacing: .08em; }
-    .project-body { padding: 1.25rem 1.5rem; flex: 1; }
-    .project-desc { font-size: 13px; color: var(--muted); line-height: 1.7; margin-bottom: 1rem; }
-    .project-tags { display: flex; flex-wrap: wrap; gap: .35rem; margin-bottom: 1rem; }
-
-    /* MULTIMEDIA */
-    .project-media { margin-top: .5rem; }
-    .project-video { width: 100%; border-radius: 4px; border: 1px solid var(--border2); background: #000; display: block; max-height: 200px; }
-    iframe.project-video { aspect-ratio: 16/9; max-height: none; height: auto; }
-    .btn-captures { display: inline-flex; align-items: center; gap: .4rem; margin-top: .6rem; font-family: var(--mono); font-size: 11px; letter-spacing: .06em; color: var(--muted); background: var(--bg3); border: 1px solid var(--border2); border-radius: 2px; padding: .3rem .75rem; cursor: pointer; transition: all .2s; }
-    .btn-captures:hover { color: var(--accent); border-color: var(--accent); }
-    .captures-strip { display: none; flex-wrap: wrap; gap: .4rem; margin-top: .6rem; }
-    .captures-strip.open { display: flex; }
-    .captures-strip img { width: calc(33.33% - .3rem); border-radius: 3px; border: 1px solid var(--border2); cursor: pointer; object-fit: cover; aspect-ratio: 16/9; transition: border-color .2s; }
-    .captures-strip img:hover { border-color: var(--accent); }
-
-    .project-footer { padding: .75rem 1.5rem; border-top: 1px solid var(--border); display: flex; align-items: center; gap: 1rem; }
-    .project-link { font-size: 11px; letter-spacing: .06em; color: var(--muted); text-decoration: none; display: flex; align-items: center; gap: .35rem; transition: color .2s; }
-    .project-link:hover { color: var(--accent); }
-    .project-link svg { width: 12px; height: 12px; }
-
-    /* MODAL */
-    .modal-overlay { display: none; position: fixed; inset: 0; z-index: 9000; background: rgba(0,0,0,.93); align-items: center; justify-content: center; }
-    .modal-overlay.open { display: flex; }
-    .modal-inner { position: relative; max-width: 90vw; }
-    .modal-inner img { max-width: 90vw; max-height: 85vh; border-radius: 4px; border: 1px solid var(--border2); display: block; }
-    .modal-close { position: absolute; top: -2rem; right: 0; background: none; border: none; color: var(--muted); font-size: 1.5rem; cursor: pointer; font-family: var(--mono); }
-    .modal-close:hover { color: var(--accent); }
-    .modal-prev, .modal-next { position: absolute; top: 50%; transform: translateY(-50%); background: rgba(9,11,14,.85); border: 1px solid var(--border2); color: var(--text); font-size: 1.1rem; cursor: pointer; padding: .5rem .75rem; border-radius: 2px; font-family: var(--mono); transition: all .2s; }
-    .modal-prev { left: -3.5rem; } .modal-next { right: -3.5rem; }
-    .modal-prev:hover, .modal-next:hover { border-color: var(--accent); color: var(--accent); }
-    .modal-counter { position: absolute; bottom: -1.8rem; left: 50%; transform: translateX(-50%); font-size: 11px; color: var(--muted); white-space: nowrap; }
-
-    /* EXPERIENCIA */
-    .exp-list { display: flex; flex-direction: column; }
-    .exp-item { display: grid; grid-template-columns: 140px 1fr; gap: 0 2rem; padding: 2rem 0; border-bottom: 1px solid var(--border); }
-    .exp-item:last-child { border-bottom: none; }
-    .exp-date { font-size: 11px; color: var(--muted); padding-top: .2rem; letter-spacing: .04em; }
-    .exp-company { font-family: var(--sans); font-weight: 700; font-size: 16px; color: var(--text); margin-bottom: .2rem; }
-    .exp-role { font-size: 12px; color: var(--accent); letter-spacing: .06em; margin-bottom: .75rem; }
-    .exp-desc { font-size: 13px; color: var(--muted); line-height: 1.8; }
-    .exp-desc li { margin-left: 1rem; margin-bottom: .25rem; }
-    .exp-stack { display: flex; flex-wrap: wrap; gap: .35rem; margin-top: .75rem; }
-
-    /* FORMACIÓN ACADÉMICA */
-    #education { background: var(--bg); border-top: 1px solid var(--border); }
-    .edu-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 1rem; }
-    .edu-card { background: var(--bg2); border: 1px solid var(--border); border-radius: 4px; padding: 1.5rem; transition: all .2s; position: relative; overflow: hidden; }
-    .edu-card::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px; background: linear-gradient(90deg, var(--accent), var(--accent2)); }
-    .edu-card:hover { border-color: var(--accent); transform: translateY(-2px); }
-    .edu-center { font-size: 10px; letter-spacing: .12em; color: var(--accent2); margin-bottom: .4rem; text-transform: uppercase; }
-    .edu-title { font-family: var(--sans); font-weight: 700; font-size: 15px; color: var(--text); margin-bottom: .4rem; line-height: 1.3; }
-    .edu-detail { font-size: 12px; color: var(--muted); }
-    .edu-badge { display: inline-block; margin-top: .75rem; font-size: 10px; padding: .2rem .6rem; border: 1px solid rgba(0,212,170,.3); color: var(--accent); border-radius: 2px; }
-
-    /* CERTIFICACIONES */
-    #certs { background: var(--bg2); border-top: 1px solid var(--border); }
-    .certs-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 1rem; }
-    .cert-card { background: var(--bg); border: 1px solid var(--border); border-radius: 4px; padding: 1.25rem; transition: all .2s; }
-    .cert-card:hover { border-color: var(--accent2); transform: translateY(-2px); }
-    .cert-issuer { font-size: 10px; letter-spacing: .1em; color: var(--accent2); margin-bottom: .5rem; text-transform: uppercase; }
-    .cert-name { font-size: 13px; color: var(--text); line-height: 1.5; font-weight: 500; }
-    .cert-badge { display: inline-block; margin-top: .6rem; font-size: 10px; padding: .15rem .5rem; border: 1px solid var(--border2); color: var(--muted); border-radius: 2px; }
-
-    /* CONTACTO */
-    #contact { text-align: center; }
-    .contact-box { max-width: 560px; margin: 0 auto; background: var(--bg2); border: 1px solid var(--border); border-radius: 6px; padding: 3rem 2rem; position: relative; overflow: hidden; }
-    .contact-box::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px; background: linear-gradient(90deg, var(--accent), var(--accent2)); }
-    .contact-email { font-family: var(--sans); font-size: 1.5rem; font-weight: 700; color: var(--accent); margin: 1.5rem 0; }
-    .contact-links { display: flex; justify-content: center; gap: 1.5rem; margin-top: 1.5rem; }
-    .contact-link { font-size: 11px; letter-spacing: .08em; color: var(--muted); text-decoration: none; padding: .5rem 1rem; border: 1px solid var(--border2); border-radius: 2px; transition: all .2s; }
-    .contact-link:hover { color: var(--accent); border-color: var(--accent); }
-
-    footer { padding: 2rem 2.5rem; border-top: 1px solid var(--border); display: flex; align-items: center; justify-content: space-between; font-size: 11px; color: var(--muted); }
-    footer span { color: var(--accent); }
-
-    @media (max-width: 640px) {
-      nav { padding: 1rem; } .nav-links { display: none; }
-      section { padding: 4rem 1.25rem; }
-      .exp-item { grid-template-columns: 1fr; } .exp-date { padding-bottom: .5rem; }
-      #hero { padding: 5rem 1.25rem 3rem; }
-      footer { flex-direction: column; gap: .5rem; text-align: center; }
-      .modal-prev { left: -.5rem; } .modal-next { right: -.5rem; }
-      .captures-strip img { width: calc(50% - .2rem); }
+    ::-webkit-scrollbar-thumb { background: var(--border); border-radius: 3px; }
+ 
+    .sidebar {
+      width: var(--sidebar-w);
+      min-width: var(--sidebar-w);
+      background: var(--surface);
+      border-right: 1px solid var(--border);
+      position: fixed;
+      top: 0; left: 0; bottom: 0;
+      display: flex;
+      flex-direction: column;
+      overflow-y: auto;
+      z-index: 100;
+    }
+ 
+    .sidebar-header {
+      padding: 10px 16px;
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+ 
+    .sidebar-header .dots span {
+      display: inline-block;
+      width: 10px; height: 10px;
+      border-radius: 50%;
+    }
+    .dot-red   { background: #ff5f57; }
+    .dot-yellow{ background: #febc2e; }
+    .dot-green { background: #28c840; }
+ 
+    .sidebar-header .path {
+      font-family: var(--mono);
+      font-size: 11px;
+      color: var(--text-muted);
+      margin-left: 6px;
+    }
+ 
+    .profile {
+      padding: 28px 24px 20px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      gap: 8px;
+    }
+ 
+    .avatar-wrap {
+      position: relative;
+      width: 84px; height: 84px;
+      margin-bottom: 4px;
+    }
+ 
+    .avatar {
+      width: 84px; height: 84px;
+      border-radius: 50%;
+      border: 2px solid var(--accent);
+      object-fit: cover;
+      display: block;
+    }
+ 
+    .avatar-ring {
+      position: absolute;
+      inset: -5px;
+      border-radius: 50%;
+      border: 1px dashed var(--accent);
+      opacity: .4;
+      animation: spin 18s linear infinite;
+    }
+ 
+    @keyframes spin { to { transform: rotate(360deg); } }
+ 
+    .profile h1 {
+      font-family: var(--mono);
+      font-size: 15px;
+      font-weight: 700;
+      color: var(--text);
+      letter-spacing: -.2px;
+    }
+ 
+    .role {
+      font-family: var(--mono);
+      font-size: 11px;
+      color: var(--accent);
+      letter-spacing: .5px;
+    }
+ 
+    .location {
+      font-size: 12px;
+      color: var(--text-muted);
+      display: flex;
+      align-items: center;
+      gap: 4px;
+    }
+ 
+    .location svg { width: 12px; height: 12px; flex-shrink: 0; }
+ 
+    .status-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background: var(--accent-dim);
+      border: 1px solid var(--accent);
+      border-radius: 20px;
+      padding: 3px 12px;
+      font-family: var(--mono);
+      font-size: 10px;
+      color: var(--accent);
+      margin: 4px 0;
+    }
+ 
+    .status-dot {
+      width: 6px; height: 6px;
+      border-radius: 50%;
+      background: var(--accent);
+      animation: pulse 2s ease infinite;
+    }
+ 
+    @keyframes pulse {
+      0%, 100% { opacity: 1; transform: scale(1); }
+      50%       { opacity: .4; transform: scale(.8); }
+    }
+ 
+    .sidebar-nav {
+      padding: 8px 0;
+      border-top: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+      margin: 4px 0;
+    }
+ 
+    .sidebar-nav a {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 7px 24px;
+      color: var(--text-muted);
+      font-size: 12px;
+      font-family: var(--mono);
+      transition: all var(--transition);
+    }
+ 
+    .sidebar-nav a .nav-icon { font-size: 13px; width: 16px; text-align: center; }
+    .sidebar-nav a .nav-prefix { color: var(--accent); font-size: 10px; }
+ 
+    .sidebar-nav a:hover, .sidebar-nav a.active {
+      color: var(--text);
+      background: var(--accent-dim);
+      border-right: 2px solid var(--accent);
+    }
+ 
+    .sidebar-links {
+      padding: 16px 24px;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      margin-top: auto;
+    }
+ 
+    .sidebar-links a {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      color: var(--text-muted);
+      font-size: 12px;
+      font-family: var(--mono);
+      padding: 6px 10px;
+      border-radius: var(--radius);
+      border: 1px solid transparent;
+      transition: all var(--transition);
+    }
+ 
+    .sidebar-links a svg { width: 14px; height: 14px; flex-shrink: 0; }
+ 
+    .sidebar-links a:hover {
+      color: var(--text);
+      border-color: var(--border);
+      background: var(--surface2);
+    }
+ 
+    .btn-cv {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+      background: var(--accent);
+      color: var(--bg) !important;
+      font-family: var(--mono);
+      font-size: 11px;
+      font-weight: 700;
+      padding: 8px 14px;
+      border-radius: var(--radius);
+      border: none !important;
+      letter-spacing: .5px;
+      margin-top: 4px;
+    }
+ 
+    .btn-cv:hover { opacity: .85 !important; }
+ 
+    .content {
+      margin-left: var(--sidebar-w);
+      flex: 1;
+      max-width: 900px;
+      padding: 40px 48px 80px;
+    }
+ 
+    .section-label {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 20px;
+    }
+ 
+    .section-label .prompt {
+      font-family: var(--mono);
+      font-size: 11px;
+      color: var(--accent);
+    }
+ 
+    .section-label h2 {
+      font-family: var(--mono);
+      font-size: 13px;
+      font-weight: 700;
+      color: var(--text);
+      letter-spacing: .5px;
+      text-transform: uppercase;
+    }
+ 
+    .section-label::after {
+      content: '';
+      flex: 1;
+      height: 1px;
+      background: var(--border);
+    }
+ 
+    section { margin-bottom: 52px; }
+ 
+    .about-block {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 24px 28px;
+      position: relative;
+      overflow: hidden;
+    }
+ 
+    .about-block::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0;
+      width: 3px; height: 100%;
+      background: var(--accent);
+    }
+ 
+    .about-block p {
+      color: var(--text-muted);
+      line-height: 1.8;
+      font-size: 13.5px;
+    }
+ 
+    .about-block p strong { color: var(--text); }
+ 
+    .card-terminal {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      padding: 8px 14px;
+      background: var(--surface2);
+      border-radius: var(--radius) var(--radius) 0 0;
+      border: 1px solid var(--border);
+      border-bottom: none;
+      font-family: var(--mono);
+      font-size: 11px;
+      color: var(--text-faint);
+    }
+ 
+    .card-terminal .tdots span {
+      width: 8px; height: 8px;
+      border-radius: 50%;
+      display: inline-block;
+    }
+ 
+    .skills-grid-outer {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 14px;
+    }
+ 
+    .skill-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 18px 20px;
+      transition: border-color var(--transition);
+    }
+ 
+    .skill-card:hover { border-color: var(--accent); }
+ 
+    .skill-card h3 {
+      font-family: var(--mono);
+      font-size: 11px;
+      color: var(--accent);
+      letter-spacing: .8px;
+      text-transform: uppercase;
+      margin-bottom: 14px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+ 
+    .skill-card h3::before { content: '//'; color: var(--text-faint); }
+ 
+    .icons-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 16px;
+      align-items: center;
+    }
+ 
+    .icons-row i {
+      font-size: 26px;
+      transition: transform var(--transition), filter var(--transition);
+      cursor: default;
+    }
+ 
+    .icons-row i:hover { transform: translateY(-3px); filter: brightness(1.2); }
+ 
+    .projects-list { display: flex; flex-direction: column; gap: 20px; }
+ 
+    .project-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      overflow: hidden;
+      transition: border-color var(--transition);
+    }
+ 
+    .project-card:hover { border-color: var(--accent); }
+ 
+    .project-header {
+      padding: 18px 22px 12px;
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 16px;
+    }
+ 
+    .project-meta { flex: 1; }
+ 
+    .project-category {
+      font-family: var(--mono);
+      font-size: 10px;
+      color: var(--accent);
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      margin-bottom: 4px;
+    }
+ 
+    .project-meta h3 {
+      font-family: var(--mono);
+      font-size: 15px;
+      font-weight: 700;
+      color: var(--text);
+      margin-bottom: 6px;
+    }
+ 
+    .project-meta p {
+      font-size: 13px;
+      color: var(--text-muted);
+      line-height: 1.65;
+    }
+ 
+    .project-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      padding: 0 22px 14px;
+    }
+ 
+    .tag {
+      font-family: var(--mono);
+      font-size: 10px;
+      padding: 2px 9px;
+      border-radius: 4px;
+      background: var(--surface2);
+      border: 1px solid var(--border);
+      color: var(--text-muted);
+    }
+ 
+    .project-media {
+      position: relative;
+      background: #000;
+    }
+ 
+    .project-media video,
+    .project-media iframe {
+      width: 100%;
+      display: block;
+      max-height: 320px;
+      border: none;
+      aspect-ratio: 16/9;
+    }
+ 
+    .project-actions {
+      padding: 12px 22px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      border-top: 1px solid var(--border);
+    }
+ 
+    .btn-ghost {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      font-family: var(--mono);
+      font-size: 11px;
+      color: var(--text-muted);
+      padding: 5px 12px;
+      border-radius: var(--radius);
+      border: 1px solid var(--border);
+      background: transparent;
+      cursor: pointer;
+      transition: all var(--transition);
+    }
+ 
+    .btn-ghost:hover { color: var(--text); border-color: var(--accent); background: var(--accent-dim); }
+ 
+    .btn-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      font-family: var(--mono);
+      font-size: 11px;
+      color: var(--accent2);
+    }
+ 
+    .gallery-strip {
+      display: none;
+      gap: 6px;
+      padding: 10px 22px;
+      overflow-x: auto;
+      background: var(--surface2);
+      border-top: 1px solid var(--border);
+    }
+ 
+    .gallery-strip.open { display: flex; }
+ 
+    .gallery-strip img {
+      height: 90px;
+      border-radius: 5px;
+      cursor: pointer;
+      border: 1px solid var(--border);
+      transition: border-color var(--transition);
+      flex-shrink: 0;
+      object-fit: cover;
+    }
+ 
+    .gallery-strip img:hover { border-color: var(--accent); }
+ 
+    .timeline { display: flex; flex-direction: column; gap: 2px; }
+ 
+    .timeline-item {
+      display: grid;
+      grid-template-columns: 130px 1fr;
+      gap: 0 20px;
+      position: relative;
+      padding-bottom: 24px;
+    }
+ 
+    .timeline-item:last-child { padding-bottom: 0; }
+ 
+    .tl-date {
+      font-family: var(--mono);
+      font-size: 11px;
+      color: var(--text-faint);
+      padding-top: 2px;
+      text-align: right;
+      line-height: 1.5;
+    }
+ 
+    .tl-body {
+      border-left: 1px solid var(--border);
+      padding-left: 20px;
+      position: relative;
+    }
+ 
+    .tl-body::before {
+      content: '';
+      position: absolute;
+      left: -5px; top: 6px;
+      width: 9px; height: 9px;
+      border-radius: 50%;
+      background: var(--accent);
+      border: 2px solid var(--bg);
+    }
+ 
+    .tl-company {
+      font-family: var(--mono);
+      font-size: 10px;
+      color: var(--accent);
+      letter-spacing: .8px;
+      text-transform: uppercase;
+    }
+ 
+    .tl-role {
+      font-size: 14px;
+      font-weight: 600;
+      color: var(--text);
+      margin: 2px 0 6px;
+    }
+ 
+    .tl-desc {
+      font-size: 12.5px;
+      color: var(--text-muted);
+      line-height: 1.7;
+    }
+ 
+    .edu-grid { display: flex; flex-direction: column; gap: 10px; }
+ 
+    .edu-item {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 14px 18px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 16px;
+      transition: border-color var(--transition);
+    }
+ 
+    .edu-item:hover { border-color: var(--accent); }
+ 
+    .edu-info { flex: 1; }
+ 
+    .edu-title {
+      font-size: 13px;
+      font-weight: 500;
+      color: var(--text);
+    }
+ 
+    .edu-source {
+      font-family: var(--mono);
+      font-size: 11px;
+      color: var(--text-faint);
+      margin-top: 2px;
+    }
+ 
+    .edu-badge {
+      font-family: var(--mono);
+      font-size: 10px;
+      padding: 2px 9px;
+      border-radius: 4px;
+      background: var(--accent-dim);
+      border: 1px solid var(--accent);
+      color: var(--accent);
+      white-space: nowrap;
+    }
+ 
+    .extra-grid { display: flex; gap: 12px; flex-wrap: wrap; }
+ 
+    .lang-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 14px 20px;
+      min-width: 140px;
+    }
+ 
+    .lang-name {
+      font-family: var(--mono);
+      font-size: 13px;
+      font-weight: 700;
+      color: var(--text);
+    }
+ 
+    .lang-level {
+      font-family: var(--mono);
+      font-size: 11px;
+      color: var(--accent);
+      margin-top: 2px;
+    }
+ 
+    /* ── MODAL ──────────────────────────────────────────────── */
+    .modal {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,.9);
+      z-index: 1000;
+      align-items: center;
+      justify-content: center;
+    }
+ 
+    .modal.open { display: flex; }
+ 
+    .modal-img-wrap {
+      position: relative;
+      max-width: 90vw;
+      max-height: 90vh;
+    }
+ 
+    .modal-img-wrap img {
+      max-width: 90vw;
+      max-height: 85vh;
+      border-radius: var(--radius);
+      display: block;
+    }
+ 
+    .modal-close {
+      position: fixed;
+      top: 20px; right: 24px;
+      font-family: var(--mono);
+      font-size: 22px;
+      color: var(--text-muted);
+      cursor: pointer;
+      background: none;
+      border: none;
+      line-height: 1;
+    }
+ 
+    .modal-close:hover { color: var(--text); }
+ 
+    .modal-nav {
+      position: fixed;
+      top: 50%;
+      transform: translateY(-50%);
+      background: var(--surface2);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      color: var(--text);
+      padding: 10px 14px;
+      cursor: pointer;
+      font-size: 18px;
+      line-height: 1;
+      z-index: 1001;
+    }
+ 
+    .modal-nav:hover { border-color: var(--accent); color: var(--accent); }
+    .modal-prev { left: 20px; }
+    .modal-next { right: 20px; }
+ 
+    .mobile-toggle {
+      display: none;
+      position: fixed;
+      top: 14px; left: 14px;
+      z-index: 200;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 8px 10px;
+      cursor: pointer;
+      color: var(--text);
+      font-size: 16px;
+    }
+ 
+    @media (max-width: 768px) {
+      .mobile-toggle { display: flex; }
+ 
+      .sidebar {
+        transform: translateX(-100%);
+        transition: transform .25s ease;
+      }
+ 
+      .sidebar.open { transform: translateX(0); }
+ 
+      .content {
+        margin-left: 0;
+        padding: 60px 20px 60px;
+      }
+ 
+      .skills-grid-outer { grid-template-columns: 1fr; }
+ 
+      .timeline-item { grid-template-columns: 1fr; }
+      .tl-date { text-align: left; }
     }
   </style>
 </head>
 <body>
-
-<!-- NAV -->
-<nav id="nav">
-  <div class="nav-logo"><span>~/</span>andres-jurado</div>
-  <ul class="nav-links">
-    <li><a href="#stack">Tecnologías</a></li>
-    <li><a href="#projects">Proyectos</a></li>
-    <li><a href="#experience">Experiencia</a></li>
-    <li><a href="#education">Formación</a></li>
-    <li><a href="#certs">Certificaciones</a></li>
-    <li><a href="#contact">Contacto</a></li>
-  </ul>
-</nav>
-
-<!-- HERO -->
-<section id="hero">
-  <div class="hero-grid"></div>
-  <div class="hero-glow"></div>
-  <div class="hero-glow2"></div>
-  <div class="hero-content">
-    <div class="hero-tag">disponible para nuevas oportunidades</div>
-    <h1 class="hero-name">
-      <span class="line1">Andrés</span>
-      <span class="line2">Jurado.</span>
-    </h1>
-    <div class="hero-roles">
-      <span class="role-pill active">Java Backend</span>
-      <span class="role-pill active">Data Engineer</span>
-      <span class="role-pill">Android Dev</span>
-      <span class="role-pill">Spring Boot</span>
-      <span class="role-pill">Snowflake</span>
+ 
+<button class="mobile-toggle" id="mobileToggle" aria-label="Menú">☰</button>
+ 
+<aside class="sidebar" id="sidebar">
+  <div class="sidebar-header">
+    <div class="dots">
+      <span class="dot-red"></span>
+      <span class="dot-yellow"></span>
+      <span class="dot-green"></span>
     </div>
-    <p class="hero-desc">
-      Desarrollador de Software con <strong>DAM (Desarrollo de Aplicaciones Multiplataforma)</strong> y experiencia práctica en dos verticales:
-      <strong>Java Backend</strong> con Spring Boot, Hibernate y Kafka, y
-      <strong>Data Engineering</strong> con Snowflake, dbt y pipelines ETL/ELT.
+    <span class="path">~/andres-jurado</span>
+  </div>
+ 
+  <div class="profile">
+    <div class="avatar-wrap">
+      <img src="img/avatar.jpg" alt="Andrés Jurado" class="avatar">
+      <div class="avatar-ring"></div>
+    </div>
+    <h1>Andrés Jurado</h1>
+    <p class="role">Software Developer</p>
+    <p class="location">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7z"/><circle cx="12" cy="9" r="2.5"/></svg>
+      Sevilla, España
     </p>
-    <div class="hero-ctas">
-      <a href="#projects" class="btn-primary">▶ ver proyectos</a>
-      <a href="mailto:driujuegos@gmail.com" class="btn-ghost">✉ contactar</a>
-      <a href="docs/CV_Andres_Jurado.pdf" target="_blank" class="btn-ghost">↓ descargar CV</a>
+    <div class="status-badge">
+      <span class="status-dot"></span>
+      disponible
     </div>
   </div>
-  <div class="hero-terminal">
-  <div class="terminal-bar">
-    <div class="dot r"></div>
-    <div class="dot y"></div>
-    <div class="dot g"></div>
-    <span class="terminal-title">andres@dev ~ profile.json</span>
+ 
+  <nav class="sidebar-nav">
+    <a href="#about" class="active"><span class="nav-prefix">$</span><span class="nav-icon">○</span>sobre mí</a>
+    <a href="#skills"><span class="nav-prefix">$</span><span class="nav-icon">◈</span>tecnologías</a>
+    <a href="#projects"><span class="nav-prefix">$</span><span class="nav-icon">◇</span>proyectos</a>
+    <a href="#experience"><span class="nav-prefix">$</span><span class="nav-icon">◉</span>experiencia</a>
+    <a href="#education"><span class="nav-prefix">$</span><span class="nav-icon">□</span>formación</a>
+  </nav>
+ 
+  <div class="sidebar-links">
+    <a href="mailto:andriujota@gmail.com">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 7-10 7L2 7"/></svg>
+      andriujota@gmail.com
+    </a>
+    <a href="https://github.com/driusito" target="_blank">
+      <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z"/></svg>
+      github.com/driusito
+    </a>
+    <a href="https://linkedin.com/in/andresjuradosuarez" target="_blank">
+      <svg viewBox="0 0 24 24" fill="currentColor"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.064 2.064 0 112.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
+      andresjuradosuarez
+    </a>
+    <a href="docs/CV_Andres_Jurado.pdf" download class="btn-cv">
+      <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+      Descargar CV
+    </a>
   </div>
-
-  <div class="terminal-body">
-    <div class="t-line">
-      <span class="t-prompt">$</span>
-      <span class="t-cmd">cat profile.json</span>
+</aside>
+ 
+<main class="content">
+ 
+  <section id="about">
+    <div class="section-label">
+      <span class="prompt">~/about $</span>
+      <h2>Sobre mí</h2>
     </div>
-
-    <div class="t-out">{</div>
-
-    <div class="t-out">
-      &nbsp;&nbsp;<span class="t-key">"nombre"</span>: <span class="t-str">"Andrés Jurado"</span>,
+    <div class="about-block">
+      <p>Desarrollador de software con formación en <strong>Desarrollo de Aplicaciones Multiplataforma (DAM)</strong> y experiencia práctica en proyectos <strong>Java / Spring Boot</strong>, <strong>Data Engineering</strong> con Snowflake y GCP, y aplicaciones <strong>Android nativas</strong> con Kotlin.<br><br>
+      He participado en proyectos que van desde el kiosco de autoservicio hasta pipelines ETL/ELT en cloud, integrando backend, frontend y bases de datos. También he desarrollado y publicado videojuegos en <strong>Unity</strong> tanto en Steam como en itch.io.</p>
     </div>
-
-    <div class="t-out">
-      &nbsp;&nbsp;<span class="t-key">"rol"</span>: <span class="t-str">"Java Dev · Data Eng"</span>,
+  </section>
+ 
+  <section id="skills">
+    <div class="section-label">
+      <span class="prompt">~/stack $</span>
+      <h2>Tecnologías</h2>
     </div>
-
-    <div class="t-out">
-      &nbsp;&nbsp;<span class="t-key">"ubicacion"</span>: <span class="t-str">"Sevilla, España"</span>,
-    </div>
-
-    <div class="t-out">
-      &nbsp;&nbsp;<span class="t-key">"stack"</span>: [
-    </div>
-
-    <div class="t-out">
-      &nbsp;&nbsp;&nbsp;&nbsp;<span class="t-str">"Java"</span>, <span class="t-str">"Spring Boot"</span>,
-    </div>
-
-    <div class="t-out">
-      &nbsp;&nbsp;&nbsp;&nbsp;<span class="t-str">"Snowflake"</span>, <span class="t-str">"GCP"</span>,
-    </div>
-
-    <div class="t-out">
-      &nbsp;&nbsp;&nbsp;&nbsp;<span class="t-str">"Kotlin"</span>, <span class="t-str">"Python"</span>
-    </div>
-
-    <div class="t-out">
-      &nbsp;&nbsp;],
-    </div>
-
-    <div class="t-out">
-      &nbsp;&nbsp;<span class="t-key">"disponible"</span>: <span class="t-val">true</span>
-    </div>
-
-    <div class="t-out">}</div>
-
-    <div class="t-line" style="margin-top:.5rem">
-      <span class="t-prompt">$</span><span class="cursor"></span>
-    </div>
-  </div>
-</div>
-
-  </div>
-</section>
-
-<!-- STACK -->
-<section id="stack">
-  <div class="reveal">
-    <div class="section-label">tech stack</div>
-    <h2 class="section-title">Tecnologías que <span>domino</span></h2>
-  </div>
-  <div class="stack-grid reveal">
-    <div class="stack-card">
-      <div class="stack-cat">Lenguajes(programación,diseño,marcas...)</div>
-      <div class="stack-tags">
-        <span class="tag hot">Java</span><span class="tag hot">Kotlin</span><span class="tag hot">Python</span>
-        <span class="tag">JavaScript</span><span class="tag">C#</span><span class="tag">SQL</span>
-        <span class="tag">HTML</span><span class="tag">CSS</span>
-      </div>
-    </div>
-    <div class="stack-card">
-      <div class="stack-cat">Frameworks & Librerías</div>
-      <div class="stack-tags">
-        <span class="tag hot">Spring Boot</span><span class="tag hot">Jetpack Compose</span>
-        <span class="tag">Spring Security</span><span class="tag">Hibernate/JPA</span>
-        <span class="tag">Angular</span><span class="tag">Hilt</span><span class="tag">Chart.js</span>
-      </div>
-    </div>
-    <div class="stack-card">
-      <div class="stack-cat">Cloud & Data</div>
-      <div class="stack-tags">
-        <span class="tag hot">Snowflake</span><span class="tag hot">Dbt</span>
-        <span class="tag hot">ETL/ELT</span><span class="tag">Pipelines de datos</span>
-        <span class="tag">Data Warehousing</span>
-      </div>
-    </div>
-    <div class="stack-card">
-      <div class="stack-cat">Bases de datos</div>
-      <div class="stack-tags">
-        <span class="tag hot">MySQL</span><span class="tag">Oracle</span>
-        <span class="tag">PostgreSQL</span><span class="tag">MongoDB</span>
-        <span class="tag">SQLite</span><span class="tag">H2</span>
-      </div>
-    </div>
-    <div class="stack-card">
-      <div class="stack-cat">DevOps & Herramientas</div>
-      <div class="stack-tags">
-        <span class="tag hot">Git</span><span class="tag">GitHub</span>
-        <span class="tag">Docker</span><span class="tag">Maven</span>
-        <span class="tag">Apache Kafka</span><span class="tag">REST APIs</span><span class="tag">JWT</span>
-      </div>
-    </div>
-    <div class="stack-card">
-      <div class="stack-cat">Otros</div>
-      <div class="stack-tags">
-        <span class="tag">Unity 3D</span><span class="tag">Android SDK</span>
-        <span class="tag">Electron</span><span class="tag">Express</span>
-        <span class="tag">UI/UX</span><span class="tag">MVVM</span>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- PROYECTOS -->
-<section id="projects">
-  <div class="reveal">
-    <div class="section-label">proyectos</div>
-    <h2 class="section-title">Lo que he <span>construido</span></h2>
-  </div>
-  <div class="projects-grid">
-
-    <!-- Habbit Reminder -->
-    <div class="project-card reveal">
-      <div class="project-header">
-        <div class="project-icon">📱</div>
-        <div>
-          <div class="project-name">Habbit Reminder</div>
-          <div class="project-type">ANDROID · KOTLIN</div>
+    <div class="skills-grid-outer">
+ 
+      <div class="skill-card">
+        <h3>Lenguajes</h3>
+        <div class="icons-row">
+          <i class="devicon-java-plain colored" title="Java"></i>
+          <i class="devicon-csharp-plain colored" title="C#"></i>
+          <i class="devicon-kotlin-plain colored" title="Kotlin"></i>
+          <i class="devicon-javascript-plain colored" title="JavaScript"></i>
+          <i class="devicon-python-plain colored" title="Python"></i>
+          <i class="devicon-mysql-plain colored" title="SQL"></i>
         </div>
       </div>
-      <div class="project-body">
-        <p class="project-desc">App Android nativa para gestión de hábitos diarios con notificaciones programadas y vista de calendario. Stack 100% moderno con arquitectura MVVM.</p>
+ 
+      <div class="skill-card">
+        <h3>Frameworks</h3>
+        <div class="icons-row">
+          <i class="devicon-spring-plain colored" title="Spring Boot"></i>
+          <i class="devicon-angularjs-plain colored" title="Angular"></i>
+          <i class="devicon-react-original colored" title="React"></i>
+        </div>
+      </div>
+ 
+      <div class="skill-card">
+        <h3>Cloud & Data</h3>
+        <div class="icons-row">
+          <i class="devicon-googlecloud-plain colored" title="GCP"></i>
+          <i class="devicon-docker-plain colored" title="Docker"></i>
+          <i class="devicon-postgresql-plain colored" title="PostgreSQL"></i>
+          <i class="devicon-mysql-plain colored" title="MySQL"></i>
+          <i class="devicon-oracle-original colored" title="Oracle"></i>
+        </div>
+      </div>
+ 
+      <div class="skill-card">
+        <h3>Otros</h3>
+        <div class="icons-row">
+          <i class="devicon-git-plain colored" title="Git"></i>
+          <i class="devicon-unity-plain colored" title="Unity"></i>
+          <i class="devicon-figma-plain colored" title="Figma"></i>
+          <i class="devicon-html5-plain colored" title="HTML5"></i>
+          <i class="devicon-css3-plain colored" title="CSS3"></i>
+          <i class="devicon-electron-original colored" title="Electron"></i>
+        </div>
+      </div>
+ 
+    </div>
+  </section>
+ 
+  <section id="projects">
+    <div class="section-label">
+      <span class="prompt">~/projects $</span>
+      <h2>Proyectos</h2>
+    </div>
+    <div class="projects-list">
+ 
+      <div class="project-card">
+        <div class="project-header">
+          <div class="project-meta">
+            <div class="project-category">Android · Kotlin</div>
+            <h3>Habbit Reminder</h3>
+            <p>App Android nativa para gestión de hábitos diarios con notificaciones programadas y vista de calendario. Stack 100% moderno con arquitectura MVVM.</p>
+          </div>
+        </div>
         <div class="project-tags">
-          <span class="tag hot">Kotlin</span><span class="tag hot">Jetpack Compose</span>
-          <span class="tag">Room</span><span class="tag">Hilt</span><span class="tag">MVVM</span>
+          <span class="tag">Kotlin</span><span class="tag">Jetpack Compose</span><span class="tag">Room</span><span class="tag">Hilt</span><span class="tag">MVVM</span>
         </div>
         <div class="project-media">
-          <video controls class="project-video" preload="none">
+          <video controls>
             <source src="vids/HabbitReminder.mp4" type="video/mp4">
           </video>
-          <button class="btn-captures" onclick="toggleCaptures(this)">📷 Mostrar capturas</button>
-          <div class="captures-strip">
-            <img src="img/HabbitReminder 1.png" alt="Habbit 1" onclick="openModal(this)">
-            <img src="img/HabbitReminder 2.png" alt="Habbit 2" onclick="openModal(this)">
-            <img src="img/HabbitReminder 3.png" alt="Habbit 3" onclick="openModal(this)">
-            <img src="img/HabbitReminder 4.png" alt="Habbit 4" onclick="openModal(this)">
-            <img src="img/HabbitReminder 5.png" alt="Habbit 5" onclick="openModal(this)">
-            <img src="img/HabbitReminder 6.png" alt="Habbit 6" onclick="openModal(this)">
+        </div>
+        <div class="gallery-strip" id="gallery-habbit">
+          <img src="img/HabbitReminder 1.png" alt="Habbit 1">
+          <img src="img/HabbitReminder 2.png" alt="Habbit 2">
+          <img src="img/HabbitReminder 3.png" alt="Habbit 3">
+          <img src="img/HabbitReminder 4.png" alt="Habbit 4">
+          <img src="img/HabbitReminder 5.png" alt="Habbit 5">
+          <img src="img/HabbitReminder 6.png" alt="Habbit 6">
+        </div>
+        <div class="project-actions">
+          <button class="btn-ghost show-captures" data-gallery="gallery-habbit">📷 Capturas</button>
+          <a href="https://github.com/Driusito/HabbitReminderApp" target="_blank" class="btn-link">↗ GitHub</a>
+        </div>
+      </div>
+ 
+      <div class="project-card">
+        <div class="project-header">
+          <div class="project-meta">
+            <div class="project-category">Full-Stack · Spring Boot</div>
+            <h3>Indicador de Gastos</h3>
+            <p>App web para registrar y visualizar gastos con gráficos interactivos en tiempo real y exportación a Excel/CSV.</p>
           </div>
         </div>
-      </div>
-      <div class="project-footer">
-        <a href="https://github.com/Driusito/HabbitReminderApp" target="_blank" class="project-link">
-          <svg viewBox="0 0 16 16" fill="currentColor"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"/></svg>
-          GitHub
-        </a>
-      </div>
-    </div>
-
-    <!-- Indicador de Gastos -->
-    <div class="project-card reveal">
-      <div class="project-header">
-        <div class="project-icon">💸</div>
-        <div>
-          <div class="project-name">Indicador de Gastos</div>
-          <div class="project-type">FULL-STACK · SPRING BOOT</div>
-        </div>
-      </div>
-      <div class="project-body">
-        <p class="project-desc">App web full-stack para registro y visualización de gastos con gráficos interactivos en tiempo real y exportación a Excel/CSV.</p>
         <div class="project-tags">
-          <span class="tag hot">Java</span><span class="tag hot">Spring Boot</span>
-          <span class="tag">Chart.js</span><span class="tag">REST API</span><span class="tag">H2</span>
+          <span class="tag">Java</span><span class="tag">Spring Boot</span><span class="tag">Chart.js</span><span class="tag">REST API</span><span class="tag">H2</span>
         </div>
         <div class="project-media">
-          <video controls class="project-video" preload="none">
+          <video controls>
             <source src="vids/GestorGastos.mp4" type="video/mp4">
           </video>
-          <button class="btn-captures" onclick="toggleCaptures(this)">📷 Mostrar capturas</button>
-          <div class="captures-strip">
-            <img src="img/Captura gastos 1.png" alt="Gastos 1" onclick="openModal(this)">
-            <img src="img/Captura gastos 2.png" alt="Gastos 2" onclick="openModal(this)">
+        </div>
+        <div class="gallery-strip" id="gallery-gastos">
+          <img src="img/Captura gastos 1.png" alt="Gastos 1">
+          <img src="img/Captura gastos 2.png" alt="Gastos 2">
+        </div>
+        <div class="project-actions">
+          <button class="btn-ghost show-captures" data-gallery="gallery-gastos">📷 Capturas</button>
+          <a href="https://github.com/driusito/gestor_gastos" target="_blank" class="btn-link">↗ GitHub</a>
+        </div>
+      </div>
+ 
+      <div class="project-card">
+        <div class="project-header">
+          <div class="project-meta">
+            <div class="project-category">Desktop · Electron + Angular</div>
+            <h3>Juegoteca</h3>
+            <p>App de escritorio multiplataforma tipo biblioteca personal de videojuegos con seguimiento de progreso. Arquitectura desacoplada en tres capas.</p>
           </div>
         </div>
-      </div>
-      <div class="project-footer">
-        <a href="https://github.com/driusito/gestor_gastos" target="_blank" class="project-link">
-          <svg viewBox="0 0 16 16" fill="currentColor"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"/></svg>
-          GitHub
-        </a>
-      </div>
-    </div>
-
-    <!-- Juegoteca -->
-    <div class="project-card reveal">
-      <div class="project-header">
-        <div class="project-icon">🎮</div>
-        <div>
-          <div class="project-name">Juegoteca</div>
-          <div class="project-type">DESKTOP · ELECTRON + ANGULAR</div>
-        </div>
-      </div>
-      <div class="project-body">
-        <p class="project-desc">App de escritorio multiplataforma tipo biblioteca personal de videojuegos con seguimiento de progreso. Arquitectura desacoplada en tres capas.</p>
         <div class="project-tags">
-          <span class="tag hot">Angular</span><span class="tag">Electron</span>
-          <span class="tag">Express</span><span class="tag">SQLite</span><span class="tag">TypeScript</span>
+          <span class="tag">Angular</span><span class="tag">Electron</span><span class="tag">Express</span><span class="tag">SQLite</span><span class="tag">TypeScript</span>
         </div>
         <div class="project-media">
-          <video controls class="project-video" preload="none">
+          <video controls>
             <source src="vids/Juegoteca.mp4" type="video/mp4">
           </video>
-          <button class="btn-captures" onclick="toggleCaptures(this)">📷 Mostrar capturas</button>
-          <div class="captures-strip">
-            <img src="img/Captura juegoteca 1.png" alt="Juegoteca 1" onclick="openModal(this)">
-            <img src="img/Captura juegoteca 2.png" alt="Juegoteca 2" onclick="openModal(this)">
+        </div>
+        <div class="gallery-strip" id="gallery-juegoteca">
+          <img src="img/Captura juegoteca 1.png" alt="Juegoteca 1">
+          <img src="img/Captura juegoteca 2.png" alt="Juegoteca 2">
+        </div>
+        <div class="project-actions">
+          <button class="btn-ghost show-captures" data-gallery="gallery-juegoteca">📷 Capturas</button>
+          <a href="https://github.com/driusito/juegoteca" target="_blank" class="btn-link">↗ GitHub</a>
+        </div>
+      </div>
+ 
+      <div class="project-card">
+        <div class="project-header">
+          <div class="project-meta">
+            <div class="project-category">Full-Stack · Spring Boot</div>
+            <h3>Gestor de Tareas</h3>
+            <p>To-Do App con Electron, manejo de prioridades, fechas límite y seguimiento de progreso. Backend con Spring Boot.</p>
           </div>
         </div>
-      </div>
-      <div class="project-footer">
-        <a href="https://github.com/driusito/juegoteca" target="_blank" class="project-link">
-          <svg viewBox="0 0 16 16" fill="currentColor"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"/></svg>
-          GitHub
-        </a>
-      </div>
-    </div>
-
-    <!-- Gestor de Tareas -->
-    <div class="project-card reveal">
-      <div class="project-header">
-        <div class="project-icon">✅</div>
-        <div>
-          <div class="project-name">Gestor de Tareas</div>
-          <div class="project-type">FULL-STACK · SPRING BOOT</div>
-        </div>
-      </div>
-      <div class="project-body">
-        <p class="project-desc">To-Do App con Electron, manejo de prioridades, fechas límite y seguimiento de progreso. Backend con Spring Boot.</p>
         <div class="project-tags">
-          <span class="tag hot">Spring Boot</span><span class="tag">Electron</span>
-          <span class="tag">JavaScript</span><span class="tag">H2</span>
+          <span class="tag">Spring Boot</span><span class="tag">Electron</span><span class="tag">JavaScript</span><span class="tag">H2</span>
         </div>
         <div class="project-media">
-          <video controls class="project-video" preload="none">
+          <video controls>
             <source src="vids/TodoApp.mp4" type="video/mp4">
           </video>
-          <button class="btn-captures" onclick="toggleCaptures(this)">📷 Mostrar capturas</button>
-          <div class="captures-strip">
-            <img src="img/Captura todoapp1.png" alt="ToDo 1" onclick="openModal(this)">
-            <img src="img/Captura todoapp2.png" alt="ToDo 2" onclick="openModal(this)">
+        </div>
+        <div class="gallery-strip" id="gallery-todo">
+          <img src="img/Captura todoapp1.png" alt="ToDo 1">
+          <img src="img/Captura todoapp2.png" alt="ToDo 2">
+        </div>
+        <div class="project-actions">
+          <button class="btn-ghost show-captures" data-gallery="gallery-todo">📷 Capturas</button>
+          <a href="https://github.com/driusito/todoapp" target="_blank" class="btn-link">↗ GitHub</a>
+        </div>
+      </div>
+ 
+      <div class="project-card">
+        <div class="project-header">
+          <div class="project-meta">
+            <div class="project-category">Videojuego · Unity · Steam</div>
+            <h3>Surface Rush</h3>
+            <p>Juego arcade de habilidad publicado en Steam. Lanza a Pumpum para rebotar por el fondo oceánico, evita obstáculos y alcanza la máxima puntuación. ¡Compite en la tabla de clasificación!</p>
           </div>
         </div>
-      </div>
-      <div class="project-footer">
-        <a href="https://github.com/driusito/todoapp" target="_blank" class="project-link">
-          <svg viewBox="0 0 16 16" fill="currentColor"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"/></svg>
-          GitHub
-        </a>
-      </div>
-    </div>
-
-    <!-- Surface Rush -->
-    <div class="project-card reveal">
-      <div class="project-header">
-        <div class="project-icon">🌊</div>
-        <div>
-          <div class="project-name">Surface Rush</div>
-          <div class="project-type">VIDEOJUEGO · UNITY · STEAM</div>
-        </div>
-      </div>
-      <div class="project-body">
-        <p class="project-desc">Juego arcade de habilidad publicado en Steam. Lanza a Pumpum para rebotar por el fondo oceánico, evita obstáculos y alcanza la máxima puntuación.</p>
         <div class="project-tags">
-          <span class="tag">Unity 3D</span><span class="tag">C#</span>
-          <span class="tag">Steam</span><span class="tag">Publicado</span>
+          <span class="tag">Unity 3D</span><span class="tag">C#</span><span class="tag">Steam</span><span class="tag">Publicado</span>
         </div>
         <div class="project-media">
-          <iframe class="project-video" src="https://www.youtube.com/embed/fnKfshykOYI"
-            title="Surface Rush Gameplay" frameborder="0"
+          <iframe src="https://www.youtube.com/embed/fnKfshykOYI" title="Surface Rush Gameplay"
             allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen>
           </iframe>
-          <button class="btn-captures" onclick="toggleCaptures(this)">📷 Mostrar capturas</button>
-          <div class="captures-strip">
-            <img src="img/surfacerush-1.jpg" alt="Surface Rush 1" onclick="openModal(this)">
-            <img src="img/surfacerush-2.jpg" alt="Surface Rush 2" onclick="openModal(this)">
-            <img src="img/surfacerush-3.jpg" alt="Surface Rush 3" onclick="openModal(this)">
+        </div>
+        <div class="gallery-strip" id="gallery-surface">
+          <img src="img/surfacerush-1.jpg" alt="Surface Rush 1">
+          <img src="img/surfacerush-2.jpg" alt="Surface Rush 2">
+          <img src="img/surfacerush-3.jpg" alt="Surface Rush 3">
+        </div>
+        <div class="project-actions">
+          <button class="btn-ghost show-captures" data-gallery="gallery-surface">📷 Capturas</button>
+          <a href="https://store.steampowered.com/app/1927560/Surface_Rush/?l=spanish" target="_blank" class="btn-link">↗ Ver en Steam</a>
+        </div>
+      </div>
+ 
+      <div class="project-card">
+        <div class="project-header">
+          <div class="project-meta">
+            <div class="project-category">Videojuego · Unity · itch.io</div>
+            <h3>Between</h3>
+            <p>Aventura en 3D y plataformas donde el jugador puede explorar un escenario de forma creativa. Publicado en itch.io.</p>
           </div>
         </div>
-      </div>
-      <div class="project-footer">
-        <a href="https://store.steampowered.com/app/1927560/Surface_Rush/?l=spanish" target="_blank" class="project-link">↗ Ver en Steam</a>
-      </div>
-    </div>
-
-    <!-- Between -->
-    <div class="project-card reveal">
-      <div class="project-header">
-        <div class="project-icon">🌌</div>
-        <div>
-          <div class="project-name">Between</div>
-          <div class="project-type">VIDEOJUEGO · UNITY · ITCH.IO</div>
-        </div>
-      </div>
-      <div class="project-body">
-        <p class="project-desc">Aventura en 3D y plataformas donde el jugador puede explorar un escenario de forma creativa. Publicado en itch.io.</p>
         <div class="project-tags">
-          <span class="tag">Unity 3D</span><span class="tag">C#</span>
-          <span class="tag">itch.io</span><span class="tag">Publicado</span>
+          <span class="tag">Unity 3D</span><span class="tag">C#</span><span class="tag">itch.io</span><span class="tag">Publicado</span>
         </div>
         <div class="project-media">
-          <iframe class="project-video" src="https://www.youtube.com/embed/ZO_B4cXZygE"
-            title="Between Gameplay" frameborder="0"
+          <iframe src="https://www.youtube.com/embed/ZO_B4cXZygE" title="Between Gameplay"
             allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen>
           </iframe>
-          <button class="btn-captures" onclick="toggleCaptures(this)">📷 Mostrar capturas</button>
-          <div class="captures-strip">
-            <img src="img/between1.jpg" alt="Between 1" onclick="openModal(this)">
-            <img src="img/between2.jpg" alt="Between 2" onclick="openModal(this)">
-            <img src="img/between3.jpg" alt="Between 3" onclick="openModal(this)">
-          </div>
+        </div>
+        <div class="gallery-strip" id="gallery-between">
+          <img src="img/between1.jpg" alt="Between 1">
+          <img src="img/between2.jpg" alt="Between 2">
+          <img src="img/between3.jpg" alt="Between 3">
+        </div>
+        <div class="project-actions">
+          <button class="btn-ghost show-captures" data-gallery="gallery-between">📷 Capturas</button>
+          <a href="https://drimtigames.itch.io/between" target="_blank" class="btn-link">↗ Ver en itch.io</a>
         </div>
       </div>
-      <div class="project-footer">
-        <a href="https://drimtigames.itch.io/between" target="_blank" class="project-link">↗ Ver en itch.io</a>
+ 
+    </div>
+  </section>
+ 
+  <section id="experience">
+    <div class="section-label">
+      <span class="prompt">~/work $</span>
+      <h2>Experiencia</h2>
+    </div>
+    <div class="timeline">
+ 
+      <div class="timeline-item">
+        <div class="tl-date">mar 2026<br>actualidad</div>
+        <div class="tl-body">
+          <div class="tl-company">Cívica</div>
+          <div class="tl-role">Ingeniero de Datos en Formación</div>
+          <div class="tl-desc">Diseño y optimización de pipelines ETL/ELT con Snowflake y GCP. Modelado de datos en estrella con dbt Core, implementación de soluciones en entornos cloud y procesamiento de datasets a gran escala.</div>
+        </div>
+      </div>
+ 
+      <div class="timeline-item">
+        <div class="tl-date">feb – jun<br>2024</div>
+        <div class="tl-body">
+          <div class="tl-company">Numier TPV</div>
+          <div class="tl-role">Full-Stack Developer (Prácticas)</div>
+          <div class="tl-desc">Desarrollo de aplicación nativa Android con Jetpack Compose (Kotlin) para sistema de autoservicio. Diseño UI/UX centrado en experiencia de usuario e implementación de lógica de negocio con arquitectura MVVM.</div>
+        </div>
+      </div>
+ 
+      <div class="timeline-item">
+        <div class="tl-date">2020</div>
+        <div class="tl-body">
+          <div class="tl-company">Freelance</div>
+          <div class="tl-role">Programador de Videojuegos</div>
+          <div class="tl-desc">Desarrollo y publicación de videojuego móvil 2D con Unity 3D y C#. Diseño de mecánicas, niveles e interfaz de usuario. Despliegue en Google Play y otras plataformas digitales.</div>
+        </div>
+      </div>
+ 
+      <div class="timeline-item">
+        <div class="tl-date">2013 – 2015</div>
+        <div class="tl-body">
+          <div class="tl-company">Junta de Andalucía</div>
+          <div class="tl-role">Técnico Microinformático</div>
+          <div class="tl-desc">Soporte técnico en sistemas microinformáticos, procesamiento de datos administrativos, mantenimiento y reparación de equipos e infraestructura de red local.</div>
+        </div>
+      </div>
+ 
+    </div>
+  </section>
+ 
+  <section id="education">
+    <div class="section-label">
+      <span class="prompt">~/education $</span>
+      <h2>Formación</h2>
+    </div>
+    <div class="edu-grid">
+ 
+      <div class="edu-item">
+        <div class="edu-info">
+          <div class="edu-title">CFGS Desarrollo de Aplicaciones Multiplataforma (DAM)</div>
+          <div class="edu-source">IES Torre del Rey · 2024</div>
+        </div>
+        <span class="edu-badge">Grado Superior</span>
+      </div>
+ 
+      <div class="edu-item">
+        <div class="edu-info">
+          <div class="edu-title">Spring Framework 6 &amp; Spring Boot 3</div>
+          <div class="edu-source">Udemy · 2025</div>
+        </div>
+        <span class="edu-badge">Certificado</span>
+      </div>
+ 
+      <div class="edu-item">
+        <div class="edu-info">
+          <div class="edu-title">Hands-On Essentials: Data Warehousing Workshop</div>
+          <div class="edu-source">Snowflake · Oficial</div>
+        </div>
+        <span class="edu-badge">Certificado</span>
+      </div>
+ 
+      <div class="edu-item">
+        <div class="edu-info">
+          <div class="edu-title">Exploring Data Transformation with Google Cloud</div>
+          <div class="edu-source">Google Cloud · Oficial</div>
+        </div>
+        <span class="edu-badge">Certificado</span>
+      </div>
+ 
+      <div class="edu-item">
+        <div class="edu-info">
+          <div class="edu-title">Fundamentos profesionales del desarrollo de software</div>
+          <div class="edu-source">Microsoft &amp; LinkedIn · 2025</div>
+        </div>
+        <span class="edu-badge">Certificado</span>
+      </div>
+ 
+      <div class="edu-item">
+        <div class="edu-info">
+          <div class="edu-title">Programación de aplicaciones móviles iOS y Android</div>
+          <div class="edu-source">EOI · 2019</div>
+        </div>
+        <span class="edu-badge">Completado</span>
+      </div>
+ 
+    </div>
+ 
+    <div style="margin-top: 20px;">
+      <div class="section-label" style="margin-bottom: 12px;">
+        <span class="prompt" style="font-size:10px;">// idiomas</span>
+      </div>
+      <div class="extra-grid">
+        <div class="lang-card">
+          <div class="lang-name">Español</div>
+          <div class="lang-level">Nativo</div>
+        </div>
+        <div class="lang-card">
+          <div class="lang-name">Inglés</div>
+          <div class="lang-level">B2</div>
+        </div>
       </div>
     </div>
-
+  </section>
+ 
+</main>
+ 
+<div class="modal" id="imageModal">
+  <button class="modal-close" id="modalClose">✕</button>
+  <button class="modal-nav modal-prev" id="modalPrev">‹</button>
+  <div class="modal-img-wrap">
+    <img id="modalImg" src="" alt="">
   </div>
-</section>
-
-<!-- MODAL -->
-<div class="modal-overlay" id="modal">
-  <div class="modal-inner">
-    <button class="modal-close" onclick="closeModal()">✕</button>
-    <button class="modal-prev" onclick="modalNav(-1)">&#10094;</button>
-    <img id="modal-img" src="" alt="">
-    <button class="modal-next" onclick="modalNav(1)">&#10095;</button>
-    <div class="modal-counter" id="modal-counter"></div>
-  </div>
+  <button class="modal-nav modal-next" id="modalNext">›</button>
 </div>
-
-<!-- EXPERIENCIA -->
-<section id="experience" style="background: var(--bg2); border-top: 1px solid var(--border);">
-  <div class="reveal">
-    <div class="section-label">experiencia</div>
-    <h2 class="section-title">Trayectoria <span>profesional</span></h2>
-  </div>
-  <div class="exp-list">
-    <div class="exp-item reveal">
-      <div class="exp-date">mar 2026<br>actualidad</div>
-      <div>
-        <div class="exp-company">Cívica</div>
-        <div class="exp-role">INGENIERO DE DATOS EN FORMACIÓN</div>
-        <ul class="exp-desc">
-          <li>Diseño y optimización de pipelines de datos (ETL/ELT) con herramientas cloud.</li>
-          <li>Gestión de bases de datos a gran escala y modelado de datos.</li>
-          <li>Implementación de soluciones en entornos Cloud con Google Cloud Platform y Snowflake.</li>
-        </ul>
-        <div class="exp-stack">
-          <span class="tag hot">Snowflake</span><span class="tag hot">GCP</span>
-          <span class="tag">ETL/ELT</span><span class="tag">Python</span>
-        </div>
-      </div>
-    </div>
-    <div class="exp-item reveal">
-      <div class="exp-date">feb 2024<br>jun 2024</div>
-      <div>
-        <div class="exp-company">Numier TPV</div>
-        <div class="exp-role">FULL-STACK DEVELOPER</div>
-        <ul class="exp-desc">
-          <li>Desarrollo de aplicación nativa Android con Jetpack Compose (Kotlin) para sistema de autoservicio.</li>
-          <li>Diseño de interfaz de usuario (UI/UX) centrada en la experiencia del usuario.</li>
-          <li>Implementación de lógica de negocio con arquitectura MVVM.</li>
-          <li>Colaboración en ciclo completo: requisitos, desarrollo y entrega.</li>
-        </ul>
-        <div class="exp-stack">
-          <span class="tag hot">Kotlin</span><span class="tag hot">Jetpack Compose</span>
-          <span class="tag">MVVM</span><span class="tag">Android SDK</span>
-        </div>
-      </div>
-    </div>
-    <div class="exp-item reveal">
-      <div class="exp-date">2020</div>
-      <div>
-        <div class="exp-company">Freelance</div>
-        <div class="exp-role">PROGRAMADOR DE VIDEOJUEGOS</div>
-        <ul class="exp-desc">
-          <li>Desarrollo integral y publicación de videojuego móvil 2D con Unity 3D y C#.</li>
-          <li>Diseño y programación de mecánicas, niveles e interfaz de usuario.</li>
-          <li>Gestión del despliegue en Google Play y otras plataformas digitales.</li>
-        </ul>
-        <div class="exp-stack">
-          <span class="tag">Unity 3D</span><span class="tag">C#</span><span class="tag">Google Play</span>
-        </div>
-      </div>
-    </div>
-    <div class="exp-item reveal">
-      <div class="exp-date">dic 2013<br>jun 2015</div>
-      <div>
-        <div class="exp-company">Junta de Andalucía</div>
-        <div class="exp-role">TÉCNICO MICROINFORMÁTICO</div>
-        <ul class="exp-desc">
-          <li>Administración y gestión de Sistemas Gestores de Bases de Datos.</li>
-          <li>Instalación, configuración y mantenimiento de sistemas operativos y aplicaciones.</li>
-          <li>Implantación y mantenimiento de infraestructuras de red local y seguridad.</li>
-        </ul>
-        <div class="exp-stack">
-          <span class="tag">SGBD</span><span class="tag">Redes</span><span class="tag">Hardware</span>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- FORMACIÓN ACADÉMICA -->
-<section id="education">
-  <div class="reveal">
-    <div class="section-label">educación</div>
-    <h2 class="section-title">Formación <span>académica</span></h2>
-  </div>
-  <div class="edu-grid reveal">
-    <div class="edu-card">
-      <div class="edu-center">IES Torre del Rey</div>
-      <div class="edu-title">CFGS Desarrollo de Aplicaciones Multiplataforma (DAM)</div>
-      <div class="edu-detail">sep 2023 – jun 2024 · Grado Superior</div>
-      <span class="edu-badge">✓ Completado</span>
-    </div>
-    <div class="edu-card">
-      <div class="edu-center">IES Julio Verne</div>
-      <div class="edu-title">CFGS Desarrollo de Aplicaciones Multiplataforma (DAM)</div>
-      <div class="edu-detail">2021 · Grado Superior</div>
-      <span class="edu-badge">✓ Completado</span>
-    </div>
-  </div>
-</section>
-
-<!-- CERTIFICACIONES -->
-<section id="certs">
-  <div class="reveal">
-    <div class="section-label">certificaciones</div>
-    <h2 class="section-title">Formación <span>complementaria</span></h2>
-  </div>
-  <div class="certs-grid reveal">
-    <div class="cert-card">
-      <div class="cert-issuer">Snowflake</div>
-      <div class="cert-name">Hands-On Essentials: Data Warehousing Workshop</div>
-      <span class="cert-badge">Oficial</span>
-    </div>
-    <div class="cert-card">
-      <div class="cert-issuer">Snowflake</div>
-      <div class="cert-name">Hands-On Essentials: Data Application Builders Workshop</div>
-      <span class="cert-badge">Oficial</span>
-    </div>
-    <div class="cert-card">
-      <div class="cert-issuer">Snowflake</div>
-      <div class="cert-name">Hands-On Essentials: Collaboration, Marketplace & Cost Estimation</div>
-      <span class="cert-badge">Oficial</span>
-    </div>
-    <div class="cert-card">
-      <div class="cert-issuer">Google Cloud</div>
-      <div class="cert-name">Exploring Data Transformation with Google Cloud</div>
-      <span class="cert-badge">Oficial</span>
-    </div>
-    <div class="cert-card">
-      <div class="cert-issuer">Udemy</div>
-      <div class="cert-name">Spring Framework 6 & Spring Boot 3 desde cero a experto</div>
-      <span class="cert-badge">2025</span>
-    </div>
-    <div class="cert-card">
-      <div class="cert-issuer">Microsoft & LinkedIn</div>
-      <div class="cert-name">Fundamentos profesionales del desarrollo de software</div>
-      <span class="cert-badge">2025</span>
-    </div>
-    <div class="cert-card">
-      <div class="cert-issuer">EOI</div>
-      <div class="cert-name">Programación de aplicaciones móviles iOS y Android</div>
-      <span class="cert-badge">2019</span>
-    </div>
-    <div class="cert-card">
-      <div class="cert-issuer">Unity</div>
-      <div class="cert-name">Curso superior de programación de videojuegos con Unity</div>
-      <span class="cert-badge">Completado</span>
-    </div>
-  </div>
-</section>
-
-<!-- CONTACTO -->
-<section id="contact">
-  <div class="reveal">
-    <div class="section-label">contacto</div>
-    <h2 class="section-title">¿Hablamos?</h2>
-  </div>
-  <div class="contact-box reveal">
-    <p style="color: var(--muted); font-size: 13px; max-width: 380px; margin: 0 auto;">
-      Busco oportunidades como <strong style="color:var(--text)">Java Developer</strong> o <strong style="color:var(--text)">Data Engineer </strong>. Si tienes un proyecto o puesto que encaje, escríbeme.
-    </p>
-    <div class="contact-email">
-  <span id="mail"></span>
-</div>
-
+ 
 <script>
-  const user = "andriujota";
-  const domain = "gmail.com";
-  document.getElementById("mail").textContent = `${user}@${domain}`;
-</script>
-    <div class="contact-links">
-      <a href="https://linkedin.com/in/andresjuradosuarez" target="_blank" class="contact-link">LinkedIn</a>
-      <a href="https://github.com/driusito" target="_blank" class="contact-link">GitHub</a>
-      <a href="docs/CV_Andres_Jurado.pdf" target="_blank" class="contact-link">↓ CV</a>
-    </div>
-  </div>
-</section>
-
-<footer>
-  <div>Andrés Jesús Jurado Suárez — <span>Software Developer</span></div>
-  <div>Pilas, Sevilla, España · 2025</div>
-</footer>
-
-<script>
-  // Nav scroll
-  const nav = document.getElementById('nav');
-  window.addEventListener('scroll', () => nav.classList.toggle('scrolled', window.scrollY > 40));
-
-  // Reveal on scroll
-  const observer = new IntersectionObserver((entries) => {
-    entries.forEach((entry, i) => {
+  const toggle = document.getElementById('mobileToggle');
+  const sidebar = document.getElementById('sidebar');
+  toggle.addEventListener('click', () => sidebar.classList.toggle('open'));
+  document.addEventListener('click', e => {
+    if (!sidebar.contains(e.target) && !toggle.contains(e.target))
+      sidebar.classList.remove('open');
+  });
+ 
+  const navLinks = document.querySelectorAll('.sidebar-nav a');
+  const sections = document.querySelectorAll('section[id]');
+  const observer = new IntersectionObserver(entries => {
+    entries.forEach(entry => {
       if (entry.isIntersecting) {
-        setTimeout(() => entry.target.classList.add('visible'), i * 80);
-        observer.unobserve(entry.target);
+        navLinks.forEach(a => a.classList.remove('active'));
+        const link = document.querySelector(`.sidebar-nav a[href="#${entry.target.id}"]`);
+        if (link) link.classList.add('active');
       }
     });
-  }, { threshold: 0.08 });
-  document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
-
-  // Toggle capturas
-  function toggleCaptures(btn) {
-    const strip = btn.nextElementSibling;
-    const isOpen = strip.classList.toggle('open');
-    btn.textContent = isOpen ? '📷 Ocultar capturas' : '📷 Mostrar capturas';
-  }
-
-  // Modal
-  let modalImgs = [], modalIdx = 0;
-
-  function openModal(img) {
-    const strip = img.closest('.captures-strip');
-    modalImgs = Array.from(strip.querySelectorAll('img'));
-    modalIdx = modalImgs.indexOf(img);
-    updateModal();
-    document.getElementById('modal').classList.add('open');
-    document.body.style.overflow = 'hidden';
-  }
-
-  function closeModal() {
-    document.getElementById('modal').classList.remove('open');
-    document.body.style.overflow = '';
-  }
-
-  function modalNav(dir) {
-    modalIdx = (modalIdx + dir + modalImgs.length) % modalImgs.length;
-    updateModal();
-  }
-
-  function updateModal() {
-    document.getElementById('modal-img').src = modalImgs[modalIdx].src;
-    document.getElementById('modal-counter').textContent = (modalIdx + 1) + ' / ' + modalImgs.length;
-  }
-
-  document.getElementById('modal').addEventListener('click', e => {
-    if (e.target === e.currentTarget) closeModal();
+  }, { threshold: 0.3 });
+  sections.forEach(s => observer.observe(s));
+ 
+  document.querySelectorAll('.show-captures').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const galleryId = btn.dataset.gallery;
+      const gallery = document.getElementById(galleryId);
+      gallery.classList.toggle('open');
+      btn.textContent = gallery.classList.contains('open') ? '✕ Cerrar' : '📷 Capturas';
+    });
   });
-
+ 
+  const modal   = document.getElementById('imageModal');
+  const modalImg = document.getElementById('modalImg');
+  let currentImages = [], currentIndex = 0;
+ 
+  document.querySelectorAll('.gallery-strip img').forEach(img => {
+    img.addEventListener('click', () => {
+      const strip = img.closest('.gallery-strip');
+      currentImages = Array.from(strip.querySelectorAll('img'));
+      currentIndex  = currentImages.indexOf(img);
+      modalImg.src  = img.src;
+      modal.classList.add('open');
+    });
+  });
+ 
+  function showModal(i) {
+    currentIndex = (i + currentImages.length) % currentImages.length;
+    modalImg.src = currentImages[currentIndex].src;
+  }
+ 
+  document.getElementById('modalPrev').addEventListener('click', () => showModal(currentIndex - 1));
+  document.getElementById('modalNext').addEventListener('click', () => showModal(currentIndex + 1));
+  document.getElementById('modalClose').addEventListener('click', () => modal.classList.remove('open'));
+  modal.addEventListener('click', e => { if (e.target === modal) modal.classList.remove('open'); });
+ 
   document.addEventListener('keydown', e => {
-    if (!document.getElementById('modal').classList.contains('open')) return;
-    if (e.key === 'ArrowLeft') modalNav(-1);
-    if (e.key === 'ArrowRight') modalNav(1);
-    if (e.key === 'Escape') closeModal();
+    if (!modal.classList.contains('open')) return;
+    if (e.key === 'ArrowLeft')  showModal(currentIndex - 1);
+    if (e.key === 'ArrowRight') showModal(currentIndex + 1);
+    if (e.key === 'Escape')     modal.classList.remove('open');
   });
 </script>
 </body>
 </html>
+ 
