@@ -9,6 +9,7 @@
   <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;400;500;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/devicon.min.css">
   <style>
+    /* ── TOKENS ─────────────────────────────────────────────── */
     :root {
       --bg:          #0d1117;
       --surface:     #161b22;
@@ -27,6 +28,7 @@
       --transition:  200ms ease;
     }
  
+    /* ── RESET ──────────────────────────────────────────────── */
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
     html { scroll-behavior: smooth; }
  
@@ -44,10 +46,12 @@
     a:hover { opacity: .75; }
     ::selection { background: var(--accent); color: var(--bg); }
  
+    /* ── SCROLLBAR ──────────────────────────────────────────── */
     ::-webkit-scrollbar { width: 6px; }
     ::-webkit-scrollbar-track { background: var(--bg); }
     ::-webkit-scrollbar-thumb { background: var(--border); border-radius: 3px; }
  
+    /* ── SIDEBAR ────────────────────────────────────────────── */
     .sidebar {
       width: var(--sidebar-w);
       min-width: var(--sidebar-w);
@@ -144,6 +148,7 @@
  
     .location svg { width: 12px; height: 12px; flex-shrink: 0; }
  
+    /* Status badge */
     .status-badge {
       display: inline-flex;
       align-items: center;
@@ -170,6 +175,7 @@
       50%       { opacity: .4; transform: scale(.8); }
     }
  
+    /* Sidebar nav */
     .sidebar-nav {
       padding: 8px 0;
       border-top: 1px solid var(--border);
@@ -197,6 +203,7 @@
       border-right: 2px solid var(--accent);
     }
  
+    /* Contact links */
     .sidebar-links {
       padding: 16px 24px;
       display: flex;
@@ -245,6 +252,7 @@
  
     .btn-cv:hover { opacity: .85 !important; }
  
+    /* ── MAIN ───────────────────────────────────────────────── */
     .content {
       margin-left: var(--sidebar-w);
       flex: 1;
@@ -252,6 +260,7 @@
       padding: 40px 56px 80px;
     }
  
+    /* Section header */
     .section-label {
       display: flex;
       align-items: center;
@@ -283,6 +292,7 @@
  
     section { margin-bottom: 52px; }
  
+    /* ── ABOUT ──────────────────────────────────────────────── */
     .about-block {
       background: var(--surface);
       border: 1px solid var(--border);
@@ -308,6 +318,7 @@
  
     .about-block p strong { color: var(--text); }
  
+    /* Terminal-style top bar on card */
     .card-terminal {
       display: flex;
       align-items: center;
@@ -328,6 +339,7 @@
       display: inline-block;
     }
  
+    /* ── SKILLS ─────────────────────────────────────────────── */
     .skills-grid-outer {
       display: grid;
       grid-template-columns: repeat(4, 1fr);
@@ -373,6 +385,24 @@
  
     .icons-row i:hover { transform: translateY(-3px); filter: brightness(1.2); }
  
+    .text-badges {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      margin-top: 10px;
+    }
+ 
+    .text-badge {
+      font-family: var(--mono);
+      font-size: 10px;
+      padding: 3px 8px;
+      border-radius: 4px;
+      background: var(--accent-dim);
+      border: 1px solid var(--accent);
+      color: var(--accent);
+    }
+ 
+    /* ── PROJECTS ───────────────────────────────────────────── */
     .projects-list {
       display: grid;
       grid-template-columns: repeat(2, 1fr);
@@ -487,6 +517,7 @@
       color: var(--accent2);
     }
  
+    /* Gallery strip */
     .gallery-strip {
       display: none;
       gap: 6px;
@@ -510,6 +541,7 @@
  
     .gallery-strip img:hover { border-color: var(--accent); }
  
+    /* ── EXPERIENCE ─────────────────────────────────────────── */
     .timeline { display: flex; flex-direction: column; gap: 2px; }
  
     .timeline-item {
@@ -568,6 +600,7 @@
       line-height: 1.7;
     }
  
+    /* ── EDUCATION ──────────────────────────────────────────── */
     .edu-grid { display: flex; flex-direction: column; gap: 10px; }
  
     .edu-item {
@@ -610,6 +643,7 @@
       white-space: nowrap;
     }
  
+    /* ── EXTRA ──────────────────────────────────────────────── */
     .extra-grid { display: flex; gap: 12px; flex-wrap: wrap; }
  
     .lang-card {
@@ -634,6 +668,7 @@
       margin-top: 2px;
     }
  
+    /* ── MODAL ──────────────────────────────────────────────── */
     .modal {
       display: none;
       position: fixed;
@@ -692,6 +727,7 @@
     .modal-prev { left: 20px; }
     .modal-next { right: 20px; }
  
+    /* ── MOBILE ─────────────────────────────────────────────── */
     .mobile-toggle {
       display: none;
       position: fixed;
@@ -736,6 +772,7 @@
 </head>
 <body>
  
+<!-- Mobile toggle -->
 <button class="mobile-toggle" id="mobileToggle" aria-label="Menú">☰</button>
  
 <aside class="sidebar" id="sidebar">
@@ -754,7 +791,7 @@
       <div class="avatar-ring"></div>
     </div>
     <h1>Andrés Jurado</h1>
-    <p class="role">Software Developer</p>
+    <p class="role">Java Dev · Data Engineer</p>
     <p class="location">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7z"/><circle cx="12" cy="9" r="2.5"/></svg>
       Sevilla, España
@@ -801,8 +838,8 @@
       <h2>Sobre mí</h2>
     </div>
     <div class="about-block">
-      <p>Desarrollador de software con formación en <strong>Desarrollo de Aplicaciones Multiplataforma (DAM)</strong> y experiencia práctica en proyectos <strong>Java / Spring Boot</strong>, <strong>Data Engineering</strong> con Snowflake y GCP, y aplicaciones <strong>Android nativas</strong> con Kotlin.<br><br>
-      He participado en proyectos que van desde el kiosco de autoservicio hasta pipelines ETL/ELT en cloud, integrando backend, frontend y bases de datos. También he desarrollado y publicado videojuegos en <strong>Unity</strong> tanto en Steam como en itch.io.</p>
+      <p>Desarrollador de software con formación en <strong>Desarrollo de Aplicaciones Multiplataforma (DAM)</strong> y dos verticales de especialización: <strong>Java Backend</strong> con Spring Boot, Hibernate y REST APIs, y <strong>Data Engineering</strong> con Snowflake, dbt Core y pipelines ETL/ELT en GCP.<br><br>
+      He diseñado pipelines de datos a gran escala, modelado esquemas en estrella con dbt, y desarrollado aplicaciones nativas Android con Kotlin. También he construido y publicado videojuegos en <strong>Unity</strong> tanto en Steam como en itch.io.</p>
     </div>
   </section>
  
@@ -840,8 +877,13 @@
           <i class="devicon-googlecloud-plain colored" title="GCP"></i>
           <i class="devicon-docker-plain colored" title="Docker"></i>
           <i class="devicon-postgresql-plain colored" title="PostgreSQL"></i>
-          <i class="devicon-mysql-plain colored" title="MySQL"></i>
-          <i class="devicon-oracle-original colored" title="Oracle"></i>
+          <i class="devicon-apacheairflow-plain colored" title="Airflow"></i>
+        </div>
+        <div class="text-badges">
+          <span class="text-badge">Snowflake</span>
+          <span class="text-badge">dbt Core</span>
+          <span class="text-badge">Power BI</span>
+          <span class="text-badge">ETL/ELT</span>
         </div>
       </div>
  
@@ -860,12 +902,46 @@
     </div>
   </section>
  
+  <!-- PROJECTS -->
   <section id="projects">
     <div class="section-label">
       <span class="prompt">~/projects $</span>
       <h2>Proyectos</h2>
     </div>
     <div class="projects-list">
+ 
+      <div class="project-card">
+        <div class="project-header">
+          <div class="project-meta">
+            <div class="project-category">Backend · Spring Boot · En desarrollo</div>
+            <h3>PetConnect</h3>
+            <p>App web para conectar dueños de mascotas en España con búsqueda por geolocalización, historial clínico, sistema de contacto con autorización y valoraciones de dueños/mascotas.</p>
+          </div>
+        </div>
+        <div class="project-tags">
+          <span class="tag">Spring Boot</span><span class="tag">PostgreSQL</span><span class="tag">PostGIS</span><span class="tag">React</span><span class="tag">Vite</span><span class="tag">Tailwind</span><span class="tag">Cloudinary</span><span class="tag">Railway</span>
+        </div>
+        <div class="project-actions">
+          <a href="https://github.com/Driusito" target="_blank" class="btn-link">↗ GitHub</a>
+          <span style="font-family:var(--mono);font-size:10px;color:var(--text-faint);margin-left:auto;">🚧 En desarrollo</span>
+        </div>
+      </div>
+ 
+      <div class="project-card">
+        <div class="project-header">
+          <div class="project-meta">
+            <div class="project-category">Data Engineering · Snowflake · dbt</div>
+            <h3>Pipeline BGG — Data Warehouse</h3>
+            <p>Pipeline ELT completo sobre el dataset de BoardGameGeek (~20.000 juegos de mesa). Modelado en estrella con tabla de hechos, 5 dimensiones y 2 tablas puente para relaciones M:N.</p>
+          </div>
+        </div>
+        <div class="project-tags">
+          <span class="tag">Snowflake</span><span class="tag">dbt Core</span><span class="tag">GCP</span><span class="tag">SQL</span><span class="tag">Star Schema</span><span class="tag">ETL/ELT</span>
+        </div>
+        <div class="project-actions">
+          <a href="https://github.com/Driusito" target="_blank" class="btn-link">↗ GitHub</a>
+        </div>
+      </div>
  
       <div class="project-card">
         <div class="project-header">
@@ -980,7 +1056,7 @@
           <div class="project-meta">
             <div class="project-category">Videojuego · Unity · Steam</div>
             <h3>Surface Rush</h3>
-            <p>Juego arcade de habilidad publicado en Steam. Lanza a Pumpum para rebotar por el fondo oceánico, evita obstáculos y alcanza la máxima puntuación. ¡Compite en la tabla de clasificación!</p>
+            <p>Juego arcade de habilidad publicado en Steam. Lanza a Pumpum para rebotar por el fondo oceánico, evita obstáculos y alcanza la máxima puntuación.</p>
           </div>
         </div>
         <div class="project-tags">
@@ -1044,7 +1120,7 @@
         <div class="tl-body">
           <div class="tl-company">Cívica</div>
           <div class="tl-role">Ingeniero de Datos en Formación</div>
-          <div class="tl-desc">Diseño y optimización de pipelines ETL/ELT con Snowflake y GCP. Modelado de datos en estrella con dbt Core, implementación de soluciones en entornos cloud y procesamiento de datasets a gran escala.</div>
+          <div class="tl-desc">Diseño y desarrollo de pipelines ELT con <strong style="color:var(--text)">Snowflake</strong> y <strong style="color:var(--text)">dbt Core</strong>. Modelado de datos en estrella (fact tables, dimensiones, tablas puente M:N). Transformaciones avanzadas con LATERAL FLATTEN, QUALIFY ROW_NUMBER() y surrogate keys vía dbt_utils. Implementación en <strong style="color:var(--text)">Google Cloud Platform</strong> con normalización de formatos mixtos de fecha y gestión de duplicados.</div>
         </div>
       </div>
  
@@ -1095,6 +1171,14 @@
  
       <div class="edu-item">
         <div class="edu-info">
+          <div class="edu-title">Programa de Data Engineering</div>
+          <div class="edu-source">Cívica · 2025–2026 · Snowflake, dbt, GCP, ETL/ELT</div>
+        </div>
+        <span class="edu-badge">Completado</span>
+      </div>
+ 
+      <div class="edu-item">
+        <div class="edu-info">
           <div class="edu-title">Spring Framework 6 &amp; Spring Boot 3 desde cero a experto</div>
           <div class="edu-source">Udemy · 2025</div>
         </div>
@@ -1104,6 +1188,22 @@
       <div class="edu-item">
         <div class="edu-info">
           <div class="edu-title">Hands-On Essentials: Data Warehousing Workshop</div>
+          <div class="edu-source">Snowflake · Oficial</div>
+        </div>
+        <span class="edu-badge">Certificado</span>
+      </div>
+ 
+      <div class="edu-item">
+        <div class="edu-info">
+          <div class="edu-title">Hands-On Essentials: Data Application Builders Workshop</div>
+          <div class="edu-source">Snowflake · Oficial</div>
+        </div>
+        <span class="edu-badge">Certificado</span>
+      </div>
+ 
+      <div class="edu-item">
+        <div class="edu-info">
+          <div class="edu-title">Hands-On Essentials: Collaboration, Marketplace &amp; Cost Estimation</div>
           <div class="edu-source">Snowflake · Oficial</div>
         </div>
         <span class="edu-badge">Certificado</span>
