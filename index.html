@@ -9,7 +9,6 @@
   <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;400;500;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/devicon.min.css">
   <style>
-    /* ── TOKENS ─────────────────────────────────────────────── */
     :root {
       --bg:          #0d1117;
       --surface:     #161b22;
@@ -28,7 +27,6 @@
       --transition:  200ms ease;
     }
  
-    /* ── RESET ──────────────────────────────────────────────── */
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
     html { scroll-behavior: smooth; }
  
@@ -46,12 +44,10 @@
     a:hover { opacity: .75; }
     ::selection { background: var(--accent); color: var(--bg); }
  
-    /* ── SCROLLBAR ──────────────────────────────────────────── */
     ::-webkit-scrollbar { width: 6px; }
     ::-webkit-scrollbar-track { background: var(--bg); }
     ::-webkit-scrollbar-thumb { background: var(--border); border-radius: 3px; }
  
-    /* ── SIDEBAR ────────────────────────────────────────────── */
     .sidebar {
       width: var(--sidebar-w);
       min-width: var(--sidebar-w);
@@ -148,7 +144,6 @@
  
     .location svg { width: 12px; height: 12px; flex-shrink: 0; }
  
-    /* Status badge */
     .status-badge {
       display: inline-flex;
       align-items: center;
@@ -175,7 +170,6 @@
       50%       { opacity: .4; transform: scale(.8); }
     }
  
-    /* Sidebar nav */
     .sidebar-nav {
       padding: 8px 0;
       border-top: 1px solid var(--border);
@@ -203,7 +197,6 @@
       border-right: 2px solid var(--accent);
     }
  
-    /* Contact links */
     .sidebar-links {
       padding: 16px 24px;
       display: flex;
@@ -252,7 +245,6 @@
  
     .btn-cv:hover { opacity: .85 !important; }
  
-    /* ── MAIN ───────────────────────────────────────────────── */
     .content {
       margin-left: var(--sidebar-w);
       flex: 1;
@@ -260,7 +252,6 @@
       padding: 40px 56px 80px;
     }
  
-    /* Section header */
     .section-label {
       display: flex;
       align-items: center;
@@ -292,7 +283,6 @@
  
     section { margin-bottom: 52px; }
  
-    /* ── ABOUT ──────────────────────────────────────────────── */
     .about-block {
       background: var(--surface);
       border: 1px solid var(--border);
@@ -318,7 +308,6 @@
  
     .about-block p strong { color: var(--text); }
  
-    /* Terminal-style top bar on card */
     .card-terminal {
       display: flex;
       align-items: center;
@@ -339,7 +328,6 @@
       display: inline-block;
     }
  
-    /* ── SKILLS ─────────────────────────────────────────────── */
     .skills-grid-outer {
       display: grid;
       grid-template-columns: repeat(4, 1fr);
@@ -402,7 +390,6 @@
       color: var(--accent);
     }
  
-    /* ── PROJECTS ───────────────────────────────────────────── */
     .projects-list {
       display: grid;
       grid-template-columns: repeat(2, 1fr);
@@ -517,7 +504,6 @@
       color: var(--accent2);
     }
  
-    /* Gallery strip */
     .gallery-strip {
       display: none;
       gap: 6px;
@@ -541,7 +527,6 @@
  
     .gallery-strip img:hover { border-color: var(--accent); }
  
-    /* ── EXPERIENCE ─────────────────────────────────────────── */
     .timeline { display: flex; flex-direction: column; gap: 2px; }
  
     .timeline-item {
@@ -600,7 +585,6 @@
       line-height: 1.7;
     }
  
-    /* ── EDUCATION ──────────────────────────────────────────── */
     .edu-grid { display: flex; flex-direction: column; gap: 10px; }
  
     .edu-item {
@@ -643,7 +627,6 @@
       white-space: nowrap;
     }
  
-    /* ── EXTRA ──────────────────────────────────────────────── */
     .extra-grid { display: flex; gap: 12px; flex-wrap: wrap; }
  
     .lang-card {
@@ -668,7 +651,6 @@
       margin-top: 2px;
     }
  
-    /* ── MODAL ──────────────────────────────────────────────── */
     .modal {
       display: none;
       position: fixed;
@@ -727,7 +709,6 @@
     .modal-prev { left: 20px; }
     .modal-next { right: 20px; }
  
-    /* ── MOBILE ─────────────────────────────────────────────── */
     .mobile-toggle {
       display: none;
       position: fixed;
@@ -772,7 +753,6 @@
 </head>
 <body>
  
-<!-- Mobile toggle -->
 <button class="mobile-toggle" id="mobileToggle" aria-label="Menú">☰</button>
  
 <aside class="sidebar" id="sidebar">
@@ -838,7 +818,7 @@
       <h2>Sobre mí</h2>
     </div>
     <div class="about-block">
-      <p>Desarrollador de software con formación en <strong>Desarrollo de Aplicaciones Multiplataforma (DAM)</strong> y dos verticales de especialización: <strong>Java Backend</strong> con Spring Boot, Hibernate y REST APIs, y <strong>Data Engineering</strong> con Snowflake, dbt Core y pipelines ETL/ELT en GCP.<br><br>
+      <p>Desarrollador de software con formación en <strong>Desarrollo de Aplicaciones Multiplataforma (DAM)</strong> y dos verticales de especialización: <strong>Java Backend</strong> con Spring Boot, Hibernate y REST APIs, y <strong>Data Engineering</strong> con Snowflake, dbt Core y pipelines ETL/ELT.<br><br>
       He diseñado pipelines de datos a gran escala, modelado esquemas en estrella con dbt, y desarrollado aplicaciones nativas Android con Kotlin. También he construido y publicado videojuegos en <strong>Unity</strong> tanto en Steam como en itch.io.</p>
     </div>
   </section>
@@ -902,7 +882,6 @@
     </div>
   </section>
  
-  <!-- PROJECTS -->
   <section id="projects">
     <div class="section-label">
       <span class="prompt">~/projects $</span>
@@ -939,7 +918,7 @@
           <span class="tag">Snowflake</span><span class="tag">dbt Core</span><span class="tag">GCP</span><span class="tag">SQL</span><span class="tag">Star Schema</span><span class="tag">ETL/ELT</span>
         </div>
         <div class="project-actions">
-          <a href="https://github.com/Driusito" target="_blank" class="btn-link">↗ GitHub</a>
+          <a href="https://github.com/Driusito/dbt_juegos_de_mesa" target="_blank" class="btn-link">↗ GitHub</a>
         </div>
       </div>
  
