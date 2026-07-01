@@ -889,25 +889,39 @@
     </div>
     <div class="projects-list">
  
-      <div class="project-card">
+      <div class="project-card" style="border-color: var(--accent);">
         <div class="project-header">
           <div class="project-meta">
-            <h3>BimbaPet</h3>
-            <p>
-              Aplicación web full stack de lugares pet-friendly en España. Mapa interactivo 
-              con check-in anónimo en tiempo real, validación de proximidad GPS, 
-              autenticación JWT y datos geoespaciales con PostGIS.
-            </p>
-            <h4>Tecnologías:</h4>
-            <p>Spring Boot 4 · Java 21 · PostGIS · React 18 · Tailwind CSS · Leaflet · Cloudinary · Railway · Vercel</p>
-            <button class="show-captures">Mostrar capturas</button>
-        <div class="project-images" style="display:none;">
-          <img src="img/BimbaPet1.png" alt="Bimba 1">
-          <img src="img/BimbaPet2.png" alt="Bimba 2">          
-        </div> 
-            <a href="https://bimbapet.es" target="_blank">Sitio web</a> 
+            <div class="project-category">Full-Stack · Spring Boot · React · PostGIS</div>
+            <h3>BimbaPet <span style="font-size:11px;color:var(--accent);font-family:var(--mono);font-weight:400;">· En producción</span></h3>
+            <p>Aplicación web de lugares pet-friendly en España. Mapa interactivo con check-in anónimo en tiempo real, validación de proximidad GPS, autenticación JWT y datos geoespaciales con PostGIS. Desplegado en Railway + Vercel con dominio propio.</p>
+          </div>
         </div>
-      </div> 
+        <div class="project-tags">
+          <span class="tag">Spring Boot 4</span>
+          <span class="tag">Java 21</span>
+          <span class="tag">PostGIS</span>
+          <span class="tag">React 18</span>
+          <span class="tag">Tailwind CSS</span>
+          <span class="tag">Leaflet</span>
+          <span class="tag">JWT</span>
+          <span class="tag">Cloudinary</span>
+          <span class="tag">Railway</span>
+          <span class="tag">Vercel</span>
+        </div>
+        <div class="gallery-strip" id="gallery-bimbapet">
+          <img src="img/BimbaPet1.png" alt="BimbaPet 1">
+          <img src="img/BimbaPet2.png" alt="BimbaPet 2">
+        </div>
+        <div class="project-actions">
+          <button class="btn-ghost show-captures" data-gallery="gallery-bimbapet">📷 Capturas</button>
+          <a href="https://bimbapet.es" target="_blank" class="btn-link">↗ Ver en producción</a>
+          <a href="https://github.com/Driusito/petconnect-backend" target="_blank" class="btn-link">↗ Backend</a>
+          <a href="https://github.com/Driusito/petconnect-frontend" target="_blank" class="btn-link">↗ Frontend</a>
+        </div>
+      </div>
+
+
       <div class="project-card">
         <div class="project-header">
           <div class="project-meta">
